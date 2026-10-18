@@ -1,0 +1,5265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday Dipali! 🌸🎂✨</title>
+  <meta name="description" content="A high-end, aesthetic interactive birthday celebration for Dipali with live ambient canvas, botanical garden, vintage polaroids, and secret love notes." />
+  <meta property="og:title" content="Happy Birthday Dipali! 🌸🎂✨" />
+  <meta property="og:description" content="A high-end, aesthetic interactive birthday celebration for Dipali." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Premium Typography: Plus Jakarta Sans, Playfair Display, Cinzel, Kalam, Dancing Script -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Dancing+Script:wght@600;700&family=Kalam:wght@400;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       RESET & MOODY DARK LUXURY VARIABLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-heading: 'Playfair Display', Georgia, serif;
+      --font-royal: 'Cinzel', serif;
+      --font-hand: 'Kalam', cursive;
+      --font-script: 'Dancing Script', cursive;
+
+      --glass-bg: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(255, 255, 255, 0.1) inset;
+      --glass-blur: blur(20px);
+
+      --color-text: #f8fafc;
+      --color-sub: #cbd5e1;
+      --color-gold: #ffd166;
+      --color-pink: #ff758f;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      font-family: var(--font-body);
+      color: #f8fafc;
+      overflow: hidden;
+      position: fixed;
+      top: 0;
+      left: 0;
+      line-height: 1.4;
+      box-sizing: border-box;
+    }
+
+    /* Ambient Dynamic Background Layer (Slightly Dark & Romantic) */
+    body {
+      background: linear-gradient(135deg, #1a0b16 0%, #240e1e 50%, #2e1124 100%);
+      background-attachment: fixed;
+      transition: background 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Fullscreen Ambient Canvas - 120 FPS GPU Accelerated Layer */
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      will-change: transform;
+      contain: strict;
+    }
+
+    /* Confetti Canvas for Cake and Finale - 120 FPS GPU Accelerated Layer */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      pointer-events: none;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      will-change: transform;
+      contain: strict;
+    }
+
+    /* Selection Highlight */
+    ::selection {
+      background: #ff758f;
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       ULTRA-REFINED DARK GLASSMORPHISM UI CARDS (COMPACT SIZING)
+       ========================================================================== */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: 18px;
+      padding: 12px 14px;
+      position: relative;
+      overflow: hidden;
+      max-width: 400px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Screen Container - Strict 100vh Single-Screen Fit (No Vertical Scrolling) */
+    .screen {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow: hidden;
+      padding: max(48px, calc(env(safe-area-inset-top) + 52px)) 12px 10px;
+      position: relative;
+      z-index: 10;
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #screen-flower-poetry {
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
+      padding: max(52px, calc(env(safe-area-inset-top) + 52px)) 12px 12px;
+      text-align: center;
+    }
+
+    #screen-flower-poetry.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .flower-poetry-photo-frame {
+      width: 260px;
+      height: 170px;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    .flower-poetry-photo-frame img {
+      width: 170px;
+      height: 260px;
+      object-fit: cover;
+      transform: rotate(-90deg);
+      flex-shrink: 0;
+    }
+
+    .flower-poetry-card {
+      width: min(100%, 440px);
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    #screen-flower-poetry .flower-poetry-text {
+      font-size: 12.5px !important;
+      line-height: 1.55 !important;
+      color: #fdf0d5;
+      white-space: pre-line;
+      margin-bottom: 12px !important;
+    }
+
+    /* Screen 3 Exception: Inside list container scrolls vertically */
+    .screen#screen-3.active {
+      justify-content: space-between;
+      overflow: hidden;
+      padding-top: max(52px, calc(env(safe-area-inset-top) + 52px));
+      padding-bottom: 8px;
+    }
+
+    #screen-reasons {
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100vh;
+      max-height: 100dvh;
+      overflow: hidden;
+      padding: max(52px, calc(env(safe-area-inset-top) + 52px)) 12px 10px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    #screen-reasons.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0;
+    }
+
+    #screen-reasons h1 {
+      font-size: 16px !important;
+      color: #ffd166;
+      font-weight: bold !important;
+      margin-bottom: 2px !important;
+    }
+
+    #screen-reasons .reasons-subtext {
+      font-size: 11px !important;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px !important;
+    }
+
+    .reason-progress {
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 12px;
+      text-shadow: 0 0 10px rgba(255, 209, 102, 0.55);
+      flex-shrink: 0;
+    }
+
+    .reason-progress span {
+      color: #ffd166;
+      font-weight: 800;
+    }
+
+    .reason-card-viewport {
+      perspective: 1000px;
+      width: 280px;
+      height: 320px;
+      max-width: 100%;
+      margin: 0 auto;
+      flex-shrink: 0;
+      touch-action: manipulation;
+    }
+
+    .reason-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .reason-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .reason-card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-sizing: border-box;
+    }
+
+    .reason-card-front {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 209, 102, 0.4);
+    }
+
+    .reason-card-icon {
+      font-size: 58px;
+      line-height: 1;
+      margin-bottom: 22px;
+      filter: drop-shadow(0 5px 12px rgba(255, 117, 143, 0.35));
+    }
+
+    .reason-card-number {
+      color: #ffd166;
+      font-family: var(--font-heading);
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    .reason-card-tap {
+      color: #fff1f2;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      animation: reasonTapPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes reasonTapPulse {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+
+    .reason-card-back {
+      transform: rotateY(180deg);
+      background: linear-gradient(145deg, rgba(35, 12, 20, 0.95), rgba(67, 18, 33, 0.95));
+      border: 1.5px solid rgba(255, 117, 143, 0.5);
+      color: #fff;
+      text-align: center;
+    }
+
+    .reason-card-text {
+      font-family: var(--font-hand);
+      font-size: 17px;
+      line-height: 1.55;
+      font-weight: 400;
+      color: #fdf0d5;
+      margin-bottom: 16px;
+    }
+
+    .reason-card-hint {
+      color: rgba(255, 255, 255, 0.65);
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    #screen-playlist {
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100vh;
+      max-height: 100dvh;
+      overflow: hidden;
+      padding: max(52px, calc(env(safe-area-inset-top) + 52px)) 14px 12px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    #screen-playlist.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0;
+    }
+
+    #screen-playlist h1 {
+      font-size: 16px !important;
+      color: #ffd166;
+      font-weight: bold !important;
+      margin-bottom: 2px !important;
+    }
+
+    #screen-playlist .playlist-subtitle {
+      font-size: 11px !important;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 6px !important;
+    }
+
+    .vinyl-record {
+      width: 130px;
+      height: 130px;
+      flex: 0 0 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #222 30%, #0d0d0d 70%);
+      border: 3px solid rgba(255, 209, 102, 0.35);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: 4px auto;
+    }
+
+    .vinyl-record::before,
+    .vinyl-record::after {
+      content: '';
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.025), 0 0 0 14px rgba(255, 255, 255, 0.035);
+      pointer-events: none;
+    }
+
+    .vinyl-record::after {
+      inset: 20px;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.025);
+    }
+
+    .vinyl-record.spinning {
+      animation: spinRecord 4s linear infinite;
+    }
+
+    .vinyl-record.paused {
+      animation-play-state: paused;
+    }
+
+    @keyframes spinRecord {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .vinyl-label {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff758f, #ffd166);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .now-playing-pill {
+      max-width: 100%;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 209, 102, 0.3);
+      background: rgba(255, 209, 102, 0.12);
+      color: #fdf0d5;
+      font-size: 11px;
+      box-shadow: 0 0 14px rgba(255, 209, 102, 0.15);
+      white-space: nowrap;
+    }
+
+    .now-playing-pill span {
+      color: #ffd166;
+      font-weight: 800;
+    }
+
+    .playlist-tracks {
+      width: 100%;
+      max-width: 400px;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0;
+      margin: 5px 0;
+    }
+
+    .playlist-track {
+      width: 100%;
+      min-height: 45px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 6px 12px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      font: inherit;
+      color: inherit;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .playlist-track.active {
+      border-color: #ffd166;
+      background: rgba(255, 209, 102, 0.13);
+      box-shadow: 0 0 12px rgba(255, 209, 102, 0.35);
+    }
+
+    .playlist-track-copy {
+      min-width: 0;
+      padding-right: 8px;
+    }
+
+    .playlist-track-title {
+      overflow: hidden;
+      color: #fff7ed;
+      font-size: 11px;
+      font-weight: 800;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .playlist-track-album {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .playlist-track-hook {
+      overflow: hidden;
+      color: #fbcfe8;
+      font-size: 9px;
+      font-style: italic;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .playlist-track-control {
+      min-width: 38px;
+      height: 32px;
+      flex-shrink: 0;
+      color: #ffd166;
+      background: rgba(255, 209, 102, 0.12);
+      border: 1px solid rgba(255, 209, 102, 0.25);
+      border-radius: 50%;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .reason-navigation {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .reason-navigation .btn {
+      min-width: 96px;
+    }
+
+    .reason-navigation .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    #screen-reasons > #open-prem-patra-btn {
+      flex-shrink: 0;
+    }
+
+    @media (max-height: 560px) {
+      .reason-card-viewport {
+        height: min(320px, 48vh);
+      }
+    }
+
+    /* Screen 8 Exception: When open, allows vertical scrolling for Prem Patra letter */
+    .screen#screen-8.letter-open {
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
+      justify-content: flex-start !important;
+      padding-top: max(52px, calc(env(safe-area-inset-top) + 52px));
+      padding-bottom: 16px;
+    }
+
+    /* Global Compact Headings (18px - 20px) */
+    h1, h2, .prank-title, .screen h1, .screen h2 {
+      font-size: 19px !important;
+      font-weight: 800 !important;
+      line-height: 1.25 !important;
+      margin-bottom: 2px !important;
+      text-align: center;
+    }
+
+    /* Global Compact Body Text (13px - 14px) */
+    p, .screen p, .subtext {
+      font-size: 13px !important;
+      line-height: 1.4 !important;
+      margin-bottom: 3px !important;
+      text-align: center;
+    }
+
+    /* ==========================================================================
+       SHIMMER LIQUID GRADIENT BUTTONS (COMPACT 13px)
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: var(--font-body);
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+      flex-shrink: 0;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: rotate(25deg);
+      transition: all 0.75s ease;
+      pointer-events: none;
+    }
+
+    .btn:hover::after {
+      left: 140%;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-pink {
+      background: linear-gradient(135deg, #e11d48 0%, #f43f5e 50%, #ff758f 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(244, 63, 94, 0.4);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #ffd166 100%);
+      color: #1a0f02;
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-green {
+      background: linear-gradient(135deg, #047857 0%, #059669 50%, #34d399 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+    }
+
+    .btn-vintage {
+      background: linear-gradient(135deg, #451a03 0%, #78350f 50%, #b45309 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 24px rgba(180, 83, 9, 0.35);
+    }
+
+    .btn-dark {
+      background: rgba(255, 255, 255, 0.12);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-sm {
+      padding: 5px 12px;
+      font-size: 11px;
+      min-height: 28px;
+    }
+
+    /* ==========================================================================
+       TOP NAVIGATION & AUDIO CONTROL BAR (COMPACT DARK GLASS)
+       ========================================================================== */
+    .top-bar {
+      position: fixed;
+      top: max(8px, calc(env(safe-area-inset-top) + 6px));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(18, 10, 18, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    /* Birthday Song Pill Button */
+    .music-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255, 117, 143, 0.18);
+      border: 1px solid rgba(255, 117, 143, 0.4);
+      padding: 5px 13px;
+      border-radius: 999px;
+      color: #ffd166;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .music-pill-btn:hover {
+      background: rgba(255, 117, 143, 0.3);
+      transform: scale(1.04);
+      box-shadow: 0 0 14px rgba(255, 117, 143, 0.4);
+    }
+
+    .music-pill-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.75;
+    }
+
+    .music-pill-btn.playing {
+      border-color: #ffd166;
+      background: rgba(255, 209, 102, 0.2);
+      color: #ffffff;
+      box-shadow: 0 0 16px rgba(255, 209, 102, 0.35);
+    }
+
+    .music-note-icon {
+      font-size: 0.95rem;
+      display: inline-block;
+    }
+
+    .music-pill-btn.playing .music-note-icon {
+      animation: noteBounce 1.2s infinite ease-in-out;
+    }
+
+    @keyframes noteBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-3px) rotate(12deg); }
+    }
+
+    .eq-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2.5px;
+      height: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .top-bar {
+        padding: 0;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
+      .music-pill-btn {
+        width: 38px;
+        height: 38px;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .music-text,
+      .music-pill-btn .eq-bars {
+        display: none;
+      }
+
+      .music-note-icon {
+        font-size: 1.15rem;
+      }
+    }
+
+    .eq-bars .bar {
+      width: 2.5px;
+      background: #ffd166;
+      border-radius: 1px;
+      height: 4px;
+      transition: height 0.15s ease;
+    }
+
+    .music-pill-btn.playing .eq-bars .bar1 { animation: eqJump 0.55s infinite ease-in-out alternate; }
+    .music-pill-btn.playing .eq-bars .bar2 { animation: eqJump 0.75s 0.2s infinite ease-in-out alternate; }
+    .music-pill-btn.playing .eq-bars .bar3 { animation: eqJump 0.45s 0.1s infinite ease-in-out alternate; }
+
+    @keyframes eqJump {
+      0% { height: 3px; }
+      100% { height: 12px; }
+    }
+
+    /* ==========================================================================
+       SCREEN 1: THE PRANK SCREEN & BACKDOOR (COMPACT)
+       ========================================================================== */
+    .prank-box {
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      padding: 16px 14px;
+    }
+
+    .prank-title {
+      font-family: var(--font-heading);
+      font-size: 19px !important;
+      font-weight: 800;
+      color: #ffd166;
+      margin-bottom: 8px !important;
+      line-height: 1.25;
+      text-shadow: 0 2px 14px rgba(255, 209, 102, 0.25);
+    }
+
+    .input-group {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .frosted-input {
+      width: 100%;
+      padding: 9px 14px;
+      font-size: 13px;
+      font-family: inherit;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      outline: none;
+      transition: all 0.25s;
+      color: #ffffff;
+      backdrop-filter: blur(10px);
+    }
+
+    .frosted-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .frosted-input:focus {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: #ff758f;
+      box-shadow: 0 0 0 3px rgba(255, 117, 143, 0.25);
+    }
+
+    .prank-reveal-view {
+      display: none;
+      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .prank-reveal-view.show {
+      display: block;
+    }
+
+    /* ==========================================================================
+       SCREEN CALENDAR: YOU KNOW WHAT IS TODAY... (OCTOBER 2026 + RIBBON)
+       ========================================================================== */
+    .calendar-wrapper {
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .ribbon-stage {
+      position: relative;
+      background: rgba(24, 12, 22, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      padding: 10px 12px;
+      min-height: unset;
+      height: auto;
+      max-height: calc(100dvh - 120px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ribbon-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(35, 12, 20, 0.96) 0%, rgba(67, 18, 33, 0.97) 100%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .ribbon-overlay.cut {
+      opacity: 0;
+      transform: scale(1.05);
+      pointer-events: none;
+    }
+
+    .ribbon-band {
+      position: absolute;
+      top: 50%;
+      width: 50%;
+      height: 38px;
+      background: linear-gradient(to bottom, #ff758f 0%, #e11d48 50%, #9f1239 100%);
+      box-shadow: 0 4px 14px rgba(244, 63, 94, 0.5);
+      transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    .ribbon-band.left {
+      left: 0;
+      transform: translateY(-50%);
+    }
+
+    .ribbon-band.right {
+      right: 0;
+      transform: translateY(-50%);
+    }
+
+    .ribbon-overlay.cut .ribbon-band.left {
+      transform: translateY(-50%) translateX(-120%) rotate(-15deg);
+    }
+
+    .ribbon-overlay.cut .ribbon-band.right {
+      transform: translateY(-50%) translateX(120%) rotate(15deg);
+    }
+
+    .ribbon-center-bow {
+      position: relative;
+      z-index: 12;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.3s ease;
+    }
+
+    .ribbon-center-bow:hover {
+      transform: scale(1.06);
+    }
+
+    .bow-icon {
+      font-size: 2.8rem;
+      filter: drop-shadow(0 6px 18px rgba(244, 63, 94, 0.6));
+      animation: bowPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes bowPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2.5px;
+      max-width: 270px;
+      margin: 2px auto 4px;
+    }
+
+    .cal-day-name {
+      font-size: 9px;
+      font-weight: 700;
+      color: #ff758f;
+      text-transform: uppercase;
+      padding: 2px 0;
+      letter-spacing: 0.5px;
+    }
+
+    .cal-day-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #e2e8f0;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .cal-day-cell:hover:not(.empty) {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .cal-day-cell.empty {
+      background: transparent;
+      border: none;
+    }
+
+    /* 26 October Heart Shape Highlight */
+    .cal-day-cell.special-day {
+      background: radial-gradient(circle at 35% 35%, #ff4d6d 0%, #c9184a 100%) !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      font-size: 11px !important;
+      border-radius: 50% !important;
+      box-shadow: 0 0 0 3px rgba(255, 117, 143, 0.4), 0 4px 14px rgba(244, 63, 94, 0.75);
+      animation: heartPulse 1.8s infinite ease-in-out;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .cal-day-cell.special-day::before {
+      content: '❤️';
+      position: absolute;
+      top: -8px;
+      right: -6px;
+      font-size: 9px;
+      animation: bounceBadge 2s infinite ease-in-out;
+    }
+
+    @keyframes heartPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 3px rgba(255, 117, 143, 0.4), 0 4px 14px rgba(244, 63, 94, 0.75); }
+      50% { transform: scale(1.1); box-shadow: 0 0 0 5px rgba(255, 117, 143, 0.6), 0 6px 18px rgba(244, 63, 94, 0.9); }
+    }
+
+    /* ==========================================================================
+       SCREEN 2: BIRTHDAY STAR REVEAL + PHOTO SPOTLIGHT (COMPACT 100vh FIT)
+       ========================================================================== */
+    .photo-wrapper {
+      position: relative;
+      margin: 2px auto 4px;
+      width: 88px;
+      height: 88px;
+    }
+
+    .photo-ring {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #ffd166;
+      box-shadow: 0 10px 25px rgba(244, 63, 94, 0.4), 0 0 0 4px rgba(255, 209, 102, 0.25);
+      animation: ringGlow 3s infinite ease-in-out;
+      background: #230c14;
+    }
+
+    @keyframes ringGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 25px rgba(244, 63, 94, 0.4), 0 0 0 4px rgba(255, 209, 102, 0.25); }
+      50% { transform: scale(1.03); box-shadow: 0 12px 30px rgba(244, 63, 94, 0.55), 0 0 0 6px rgba(255, 209, 102, 0.35); }
+    }
+
+    .photo-ring img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .photo-ring:hover img {
+      transform: scale(1.06);
+    }
+
+    .photo-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      background: #ffd166;
+      color: #1a0f02;
+      font-size: 0.9rem;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+      animation: bounceBadge 2s infinite ease-in-out;
+    }
+
+    @keyframes bounceBadge {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    /* Editable Text Box (Compact 13px) */
+    .editable-box {
+      font-size: 12.5px;
+      line-height: 1.45;
+      outline: none;
+      padding: 6px 8px;
+      border-radius: 10px;
+      color: #f8fafc;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .editable-box:focus {
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 0 2px #ff758f;
+    }
+
+    /* ==========================================================================
+       SCREEN 3: GOLDEN 100 NICKNAMES GALLERY (EXCEPTION: SCROLLABLE LIST)
+       ========================================================================== */
+    .nicknames-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      max-height: calc(100dvh - 58px);
+      max-width: 460px;
+      width: 100%;
+    }
+
+    .nicknames-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      flex: 1;
+      max-height: calc(100dvh - 170px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: y proximity;
+      padding: 4px 4px 10px;
+      margin: 4px 0 6px;
+      scrollbar-width: thin;
+      scrollbar-color: #ffd166 rgba(255, 255, 255, 0.1);
+    }
+
+    .nickname-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: #f8fafc;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s ease;
+      scroll-snap-align: start;
+      width: 100%;
+      min-height: 44px;
+    }
+
+    .nickname-card:hover {
+      transform: translateY(-2px);
+      border-color: #ffd166;
+    }
+
+    .nickname-card.liked {
+      border-color: #ff758f;
+      background: rgba(255, 117, 143, 0.22);
+    }
+
+    .heart-toggle {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 2px;
+      border-radius: 50%;
+      filter: grayscale(100%);
+      opacity: 0.35;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .heart-toggle:hover {
+      transform: scale(1.2);
+    }
+
+    .heart-toggle.active {
+      filter: grayscale(0%);
+      opacity: 1;
+      animation: heartPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes heartPop {
+      0% { transform: scale(0.6); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    /* ==========================================================================
+       SCREEN 4: NIGHT BOTANICAL GARDEN (FOREST EMERALD - COMPACT)
+       ========================================================================== */
+    .garden-wrapper {
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .picker-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px;
+      margin: 3px 0;
+    }
+
+    .picker-btn {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(110, 231, 183, 0.3);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #a7f3d0;
+      transition: all 0.2s ease;
+    }
+
+    .picker-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+    }
+
+    .picker-btn.active {
+      border-color: #34d399;
+      background: rgba(5, 150, 105, 0.4);
+      transform: scale(1.04);
+      color: #ffffff;
+    }
+
+    .garden-canvas-box {
+      width: 100%;
+      height: 155px;
+      max-height: 24vh;
+      background: radial-gradient(circle at 50% 30%, #0d281e 0%, #081c15 60%, #040e0b 100%);
+      border: 2.5px solid rgba(110, 231, 183, 0.25);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      cursor: crosshair;
+      box-shadow: inset 0 4px 16px rgba(0, 0, 0, 0.6);
+      margin-bottom: 6px;
+      touch-action: none;
+    }
+
+    .planted-flower {
+      position: absolute;
+      transform: translate(-50%, -50%) scale(0);
+      user-select: none;
+      pointer-events: none;
+      animation: bloomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.4));
+    }
+
+    @keyframes bloomIn {
+      0% { transform: translate(-50%, -50%) scale(0) rotate(-45deg); opacity: 0; }
+      60% { transform: translate(-50%, -50%) scale(1.2) rotate(15deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    /* ==========================================================================
+       SCREEN 5: VINTAGE POLAROID VIEWER (VERTICAL SLIDE REEL)
+       ========================================================================== */
+    .polaroid-vertical-slider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      max-width: 320px;
+      flex: 1;
+      max-height: calc(100dvh - 170px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 6px 6px 20px;
+      margin: 4px auto;
+      scrollbar-width: thin;
+      scrollbar-color: #ffd166 rgba(255, 255, 255, 0.1);
+    }
+
+    .polaroid-slide-item {
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .polaroid-card {
+      background: #faf7f2;
+      padding: 8px 8px 12px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0,0,0,0.25);
+      border-radius: 8px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      width: 215px;
+      max-width: 86vw;
+      text-align: center;
+    }
+
+    .polaroid-card:hover {
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .polaroid-badge-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2px 5px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #78350f;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .polaroid-img-box {
+      width: 100%;
+      height: 185px;
+      background: #1e1610;
+      overflow: hidden;
+      margin-bottom: 6px;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .polaroid-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .polaroid-img-box:hover img {
+      transform: scale(1.04);
+    }
+
+    .polaroid-caption {
+      font-family: var(--font-hand);
+      font-size: 13px;
+      color: #382d24;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.25;
+      outline: none;
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px dashed transparent;
+      transition: border-color 0.2s ease;
+      cursor: text;
+    }
+
+    .polaroid-caption:focus {
+      background: #ffffff;
+      border-color: #ffd166;
+    }
+
+    .polaroid-like-btn {
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      padding: 2px;
+    }
+
+    .polaroid-like-btn.liked {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    .polaroid-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 2px 0 4px;
+    }
+
+    .polaroid-counter-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #ffd166;
+      background: rgba(255, 209, 102, 0.15);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 209, 102, 0.3);
+    }
+
+    /* ==========================================================================
+       SCREEN 6: DORAEMON & SHINCHAN CAKE PARTY (COMPACT 100vh FIT)
+       ========================================================================== */
+    .special-cartoons-duo {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 5px;
+      margin: 2px auto 3px;
+      max-width: 390px;
+      width: 100%;
+    }
+
+    .special-cartoon-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      border-radius: 12px;
+      padding: 4px 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      min-width: 0;
+      max-width: 78px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .special-cartoon-card:hover {
+      transform: translateY(-2px);
+      border-color: #ffd166;
+    }
+
+    .cartoon-frame {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1.5px solid #ffd166;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 209, 102, 0.3);
+      margin-bottom: 2px;
+      background: rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .cartoon-guest-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cartoon-guest-emoji {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .cartoon-badge-pill {
+      display: inline-block;
+      font-size: 7px;
+      font-weight: 800;
+      color: #ffd166;
+      background: rgba(255, 209, 102, 0.15);
+      border: 1px solid rgba(255, 209, 102, 0.35);
+      border-radius: 999px;
+      padding: 1px 4px;
+      margin-bottom: 1px;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .cartoon-caption-tag h3 {
+      font-family: var(--font-heading);
+      font-size: 8px !important;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0 !important;
+      white-space: nowrap;
+    }
+
+    .cartoon-caption-tag p {
+      display: none;
+      font-size: 10px !important;
+      color: #fbcfe8;
+      line-height: 1.25 !important;
+      font-style: italic;
+      margin-bottom: 0 !important;
+    }
+
+    .bounce-2 { animation: cartoonBounce 1.4s 0.2s infinite ease-in-out; }
+    .bounce-4 { animation: cartoonBounce 1.3s 0.1s infinite ease-in-out; }
+
+    @keyframes cartoonBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    #screen-6 {
+      padding: max(58px, calc(env(safe-area-inset-top) + 50px)) 14px 12px;
+    }
+
+    #screen-6.active {
+      justify-content: space-between;
+      gap: 3px;
+    }
+
+    .cake-party-content {
+      width: 100%;
+      max-width: 400px;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cake-party-copy {
+      flex: 0 0 auto;
+    }
+
+    .cake-party-copy p {
+      margin-bottom: 3px !important;
+    }
+
+    .doremon-feature {
+      width: min(210px, 62vw);
+      height: min(210px, 62vw);
+      max-height: 25vh;
+      flex: 0 0 auto;
+      overflow: hidden;
+      border: 3px solid #ffd166;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42), 0 0 22px rgba(255, 209, 102, 0.34);
+    }
+
+    .doremon-feature img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cake-piece {
+      width: 250px;
+      height: 218px;
+      margin: 0 auto;
+      position: relative;
+      display: block;
+      flex: 0 0 auto;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+
+    .cake-piece:focus-visible {
+      border-radius: 20px;
+      outline: 2px solid #ffd166;
+      outline-offset: 2px;
+    }
+
+    .cake-stage {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.25s ease;
+    }
+
+    .cake-piece:hover .cake-stage {
+      transform: translateY(-2px);
+    }
+
+    .cake-tier {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 9px 9px 12px 12px / 7px 7px 10px 10px;
+      box-shadow: inset 0 -7px 10px rgba(35, 7, 16, 0.3), 0 4px 7px rgba(0, 0, 0, 0.23);
+    }
+
+    .cake-tier::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -5px;
+      height: 12px;
+      border-radius: 50%;
+      box-shadow: inset 0 3px 3px rgba(255, 255, 255, 0.58), 0 2px 3px rgba(41, 13, 23, 0.22);
+    }
+
+    .cake-tier-one {
+      width: 170px;
+      height: 45px;
+      bottom: 30px;
+      background: linear-gradient(to right, #4a1525, #8a2b4b, #4a1525);
+    }
+
+    .cake-tier-one::before {
+      background:
+        radial-gradient(circle, #ffe6a3 0 2px, transparent 2.6px) 0 5px / 12px 8px repeat-x,
+        linear-gradient(90deg, #8a2b4b, #c55371 50%, #8a2b4b);
+    }
+
+    .cake-tier-two {
+      width: 125px;
+      height: 40px;
+      bottom: 71px;
+      background:
+        radial-gradient(ellipse at 28% 40%, rgba(255, 231, 224, 0.72) 0 7%, transparent 8%),
+        radial-gradient(ellipse at 68% 58%, rgba(255, 231, 224, 0.52) 0 8%, transparent 9%),
+        linear-gradient(100deg, #ad4566, #ed91a8 45%, #c95778);
+    }
+
+    .cake-tier-two::before {
+      background:
+        radial-gradient(circle, #ffe6a3 0 1.7px, transparent 2.3px) 0 4px / 10px 8px repeat-x,
+        linear-gradient(90deg, #e8859e, #ffd3d9 50%, #d56e89);
+    }
+
+    .cake-tier-three {
+      width: 80px;
+      height: 35px;
+      bottom: 108px;
+      z-index: 2;
+      background: linear-gradient(100deg, #d9bd92, #fff2d0 38%, #fff9e9 57%, #d7b987);
+      border: 1px solid rgba(255, 209, 102, 0.9);
+      overflow: visible;
+    }
+
+    .cake-tier-three::before {
+      top: -5px;
+      background: linear-gradient(90deg, #f1d9a9, #fff9e9 50%, #e4c796);
+      border: 1px solid rgba(197, 151, 64, 0.8);
+    }
+
+    .cake-plaque {
+      position: absolute;
+      z-index: 4;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 1px 5px;
+      border: 1px solid #ba8a35;
+      border-radius: 4px;
+      color: #68451a;
+      background: linear-gradient(90deg, #f7d681, #fff2c4, #e5bc60);
+      font-family: var(--font-royal);
+      font-size: 6px;
+      font-weight: 800;
+      line-height: 1.2;
+      white-space: nowrap;
+      box-shadow: 0 1px 3px rgba(67, 39, 14, 0.35);
+    }
+
+    .cake-interior {
+      position: absolute;
+      z-index: 1;
+      top: 5px;
+      right: 1px;
+      width: 29px;
+      height: 24px;
+      opacity: 0;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+      background: repeating-linear-gradient(
+        to bottom,
+        #fff1d1 0 4px,
+        #6b2138 4px 8px
+      );
+      transition: opacity 0.25s ease 0.25s;
+    }
+
+    .cake-slice {
+      position: absolute;
+      z-index: 5;
+      top: 5px;
+      right: 0;
+      width: 30px;
+      height: 24px;
+      opacity: 0.98;
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+      background:
+        linear-gradient(90deg, transparent 76%, rgba(255, 244, 220, 0.9) 77%),
+        repeating-linear-gradient(to bottom, #fff1d1 0 4px, #6b2138 4px 8px);
+      filter: drop-shadow(2px 3px 2px rgba(42, 14, 23, 0.45));
+      transform-origin: 0 50%;
+      transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+    }
+
+    .cake-stand {
+      position: absolute;
+      z-index: 3;
+      left: 50%;
+      bottom: 13px;
+      width: 212px;
+      height: 14px;
+      transform: translateX(-50%);
+      border: 1px solid rgba(255, 235, 183, 0.85);
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff6d5, #b99c69 43%, #f7e5b7 70%, #8b744f);
+      box-shadow: 0 8px 11px rgba(0, 0, 0, 0.42), 0 4px 18px rgba(255, 214, 142, 0.22);
+    }
+
+    .cake-stand::before {
+      content: "";
+      position: absolute;
+      inset: 3px 13px;
+      border: 1px solid rgba(130, 99, 44, 0.65);
+      border-radius: 50%;
+    }
+
+    .cake-candles {
+      position: absolute;
+      z-index: 6;
+      left: 50%;
+      bottom: 139px;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      transform: translateX(-50%);
+    }
+
+    .cake-candle {
+      position: relative;
+      width: 7px;
+      height: 25px;
+      border-radius: 3px 3px 1px 1px;
+      background: repeating-linear-gradient(135deg, #fff9e9 0 4px, #d5a43f 4px 7px);
+      box-shadow: inset -1px 0 2px rgba(84, 48, 12, 0.3), 0 1px 2px rgba(0, 0, 0, 0.25);
+    }
+
+    .cake-candle:nth-child(2) {
+      height: 29px;
+    }
+
+    .candle-flame {
+      position: absolute;
+      width: 11px;
+      height: 16px;
+      left: 50%;
+      top: -16px;
+      transform: translateX(-50%);
+      border-radius: 50% 50% 20% 20%;
+      background: radial-gradient(circle, #fff 20%, #ffd166 60%, #ff5400 90%);
+      filter: drop-shadow(0 0 8px #ffbe0b);
+      animation: candleFlicker 0.15s infinite alternate;
+      transform-origin: 50% 100%;
+      transition: opacity 0.2s ease;
+    }
+
+    .candle-smoke {
+      position: absolute;
+      left: 50%;
+      top: -19px;
+      width: 13px;
+      height: 17px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at 50% 65%, rgba(255, 255, 255, 0.72), rgba(216, 220, 229, 0.16) 62%, transparent 75%);
+      opacity: 0;
+      transform: translateX(-50%) scale(0.55);
+      pointer-events: none;
+    }
+
+    .cake-piece.is-cut .candle-flame {
+      animation: flameBlowOut 0.35s ease-out forwards;
+    }
+
+    .cake-piece.is-cut .candle-smoke {
+      animation: candleSmokeRise 1.5s ease-out 0.15s both;
+    }
+
+    .cake-piece.is-cut .cake-interior {
+      opacity: 1;
+    }
+
+    .cake-piece.is-cut .cake-slice {
+      transform: translate(35px, 8px) rotate(12deg);
+      opacity: 0.95;
+    }
+
+    .cake-accessory {
+      position: absolute;
+      border-radius: 50%;
+      background: #f4d27e;
+      box-shadow: 0 0 4px rgba(255, 220, 137, 0.7);
+    }
+
+    .cake-pearl {
+      width: 4px;
+      height: 4px;
+    }
+
+    .cake-tier-one .cake-pearl {
+      top: 3px;
+    }
+
+    .cake-pearl:nth-of-type(1) { left: 13px; }
+    .cake-pearl:nth-of-type(2) { left: 37px; }
+    .cake-pearl:nth-of-type(3) { left: 61px; }
+    .cake-pearl:nth-of-type(4) { left: 85px; }
+    .cake-pearl:nth-of-type(5) { left: 109px; }
+    .cake-pearl:nth-of-type(6) { left: 133px; }
+    .cake-pearl:nth-of-type(7) { left: 153px; }
+
+    @keyframes candleFlicker {
+      from { transform: translateX(-50%) scale(0.9, 1.08) rotate(-4deg); }
+      to { transform: translateX(-50%) scale(1.08, 0.94) rotate(4deg); }
+    }
+
+    @keyframes flameBlowOut {
+      0% { opacity: 1; filter: drop-shadow(0 0 10px #ffbe0b); }
+      55% { opacity: 0.65; transform: translateX(-50%) scale(1.35, 0.55) rotate(28deg); }
+      100% { opacity: 0; transform: translateX(-50%) scale(0.1, 0.1) rotate(55deg); }
+    }
+
+    @keyframes candleSmokeRise {
+      0% { opacity: 0.8; transform: translateX(-50%) translateY(0) scale(0.55); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-27px) scale(1.5); }
+    }
+
+    .cake-cut-banner {
+      background: rgba(255, 117, 143, 0.22);
+      border: 1.5px solid #ff758f;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffd166;
+      animation: popIn 0.4s ease;
+    }
+
+    #cake-next-btn-container .btn {
+      animation: cakeNextPulse 1.5s ease-in-out infinite;
+    }
+
+    #screen-dance {
+      padding: max(58px, calc(env(safe-area-inset-top) + 50px)) 14px 12px;
+    }
+
+    #screen-dance.active {
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .dance-party-content {
+      width: 100%;
+      max-width: 460px;
+      min-height: 0;
+      display: flex;
+      flex: 0 1 auto;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .dance-party-content h1 {
+      color: #ff758f;
+      flex: 0 0 auto;
+    }
+
+    .shinchandance-video {
+      display: block;
+      width: min(100%, 420px);
+      height: min(50vh, 420px);
+      max-height: min(50vh, 420px);
+      flex: 0 1 auto;
+      min-height: 0;
+      object-fit: contain;
+      object-position: center;
+      transform: translateX(-18%);
+      filter: url(#remove-dance-background);
+    }
+
+    .dance-party-caption {
+      color: #ffd166;
+      font-family: var(--font-hand);
+      font-size: 19px !important;
+      font-weight: 700;
+      line-height: 1.35 !important;
+      margin: 0 0 6px !important;
+      flex: 0 0 auto;
+    }
+
+    #dance-to-playlist-btn {
+      margin-top: 0;
+      flex: 0 0 auto;
+    }
+
+    @media (max-height: 650px) {
+      #screen-dance {
+        padding-top: max(48px, calc(env(safe-area-inset-top) + 40px));
+      }
+
+      .shinchandance-video {
+        height: 42vh;
+        max-height: 42vh;
+      }
+    }
+
+    @keyframes cakeNextPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(255, 117, 143, 0); }
+      50% { box-shadow: 0 0 18px rgba(255, 117, 143, 0.72); }
+    }
+
+    @media (max-height: 650px) {
+      #screen-6 {
+        padding-top: max(48px, calc(env(safe-area-inset-top) + 40px));
+      }
+
+      .cake-piece {
+        transform: scale(0.86);
+        margin-top: -14px;
+        margin-bottom: -14px;
+      }
+
+      .doremon-feature {
+        width: min(150px, 44vw);
+        height: min(150px, 44vw);
+      }
+    }
+
+    /* ==========================================================================
+       SCREEN 7: VELVET PINK POETRY & SPECIAL LINES (COMPACT 100vh FIT)
+       ========================================================================== */
+    .shayari-box {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      border: 1.5px dashed rgba(255, 117, 143, 0.5);
+      position: relative;
+    }
+
+    .shayari-text {
+      font-family: var(--font-hand);
+      font-size: 12.5px;
+      font-style: italic;
+      line-height: 1.45;
+      color: #ffe4e6;
+      margin: 2px 0 4px;
+      outline: none;
+      padding: 2px 4px;
+      border-radius: 6px;
+    }
+
+    /* ==========================================================================
+       SCREEN 8: THE VINTAGE PREM PATRA (EXCEPTION: SCROLLABLE LETTER)
+       ========================================================================== */
+    .envelope {
+      width: 100%;
+      max-width: 360px;
+      background: linear-gradient(135deg, #2d221c 0%, #1f1612 100%);
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      border: 2px solid #d4a373;
+      padding: 14px 16px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      margin: 4px auto;
+      transition: transform 0.3s ease;
+    }
+
+    .envelope:hover {
+      transform: translateY(-2px);
+    }
+
+    .wax-seal {
+      width: 48px;
+      height: 48px;
+      background: radial-gradient(circle at 35% 35%, #e11d48 0%, #881337 100%);
+      border-radius: 50%;
+      margin: 6px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffd166;
+      font-size: 1.3rem;
+      box-shadow: 0 6px 16px rgba(225, 29, 72, 0.5);
+      border: 2px solid #ffd166;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .wax-seal:hover {
+      transform: scale(1.1) rotate(6deg);
+    }
+
+    .letter-sheet {
+      display: none;
+      background: #faf4e6;
+      border: 2px solid #d4a373;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-top: 4px;
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5);
+      text-align: left;
+      font-family: var(--font-hand);
+      color: #3b1820;
+      max-height: calc(100dvh - 130px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      animation: unfoldLetter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes unfoldLetter {
+      0% { opacity: 0; transform: scaleY(0.4) translateY(-20px); }
+      100% { opacity: 1; transform: scaleY(1) translateY(0); }
+    }
+
+    /* ==========================================================================
+       SCREEN 9: DIPALI'S PRIVATE RETURN NOTE (COMPACT 100vh FIT)
+       ========================================================================== */
+    .notepad-textarea {
+      width: 100%;
+      min-height: 80px;
+      height: 95px;
+      max-height: 120px;
+      padding: 8px 10px;
+      font-size: 12.5px;
+      font-family: inherit;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      outline: none;
+      resize: none;
+      line-height: 1.45;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      transition: all 0.25s;
+      margin-bottom: 8px;
+      backdrop-filter: blur(8px);
+    }
+
+    .notepad-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .notepad-textarea:focus {
+      border-color: #ff758f;
+      background: rgba(255, 255, 255, 0.14);
+      box-shadow: 0 0 0 3px rgba(255, 117, 143, 0.25);
+    }
+
+    /* ==========================================================================
+       SCREEN 10: GRAND FINALE (GOLDEN BLESSINGS - COMPACT 100vh FIT)
+       ========================================================================== */
+    .blessing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      margin: 4px 0;
+      text-align: left;
+    }
+
+    .blessing-item {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 5px 6px;
+      border-radius: 8px;
+      border-left: 3px solid #ffd166;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .blessing-item h4 {
+      font-size: 10.5px !important;
+      font-weight: 700;
+      color: #ffd166;
+      margin-bottom: 2px !important;
+    }
+
+    .blessing-item p {
+      font-size: 9.5px !important;
+      line-height: 1.25 !important;
+      color: #e2e8f0;
+      margin-bottom: 0 !important;
+      text-align: left !important;
+    }
+
+    /* ==========================================================================
+       POST-FINALE SUSPENSE & VOICE NOTE
+       ========================================================================== */
+    .suspense-screen {
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
+      padding: max(60px, calc(env(safe-area-inset-top) + 56px)) 16px 18px;
+      justify-content: center;
+      text-align: center;
+      isolation: isolate;
+    }
+
+    .suspense-screen::before,
+    .suspense-screen::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    #suspense-1 {
+      background: radial-gradient(ellipse at center, rgba(86, 24, 54, 0.5), transparent 70%);
+    }
+
+    #suspense-1::before {
+      background: radial-gradient(ellipse at center, transparent 25%, rgba(5, 3, 12, 0.82) 100%);
+    }
+
+    #suspense-1::after {
+      content: '🤭  ?  🤫';
+      display: grid;
+      place-items: center;
+      color: rgba(255, 209, 102, 0.12);
+      font-size: clamp(42px, 12vw, 76px);
+      letter-spacing: 0.25em;
+      animation: suspenseGlow 3s ease-in-out infinite;
+    }
+
+    #suspense-2,
+    #suspense-4 {
+      background: radial-gradient(ellipse at 50% 35%, rgba(125, 82, 23, 0.35), transparent 68%);
+    }
+
+    #suspense-2::after,
+    #suspense-4::after {
+      background-image: radial-gradient(circle, rgba(255, 209, 102, 0.35) 1px, transparent 1.5px);
+      background-size: 38px 38px;
+      opacity: 0.28;
+      animation: shimmerDrift 12s linear infinite;
+    }
+
+    .suspense-content {
+      position: relative;
+      width: min(100%, 400px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      z-index: 1;
+    }
+
+    .suspense-heading {
+      color: #ffd166 !important;
+      font-size: 19px !important;
+      font-weight: 800 !important;
+      line-height: 1.35 !important;
+      margin: 0 0 2px !important;
+      text-align: center;
+    }
+
+    .suspense-copy {
+      color: rgba(255, 255, 255, 0.82) !important;
+      font-size: 13px !important;
+      line-height: 1.55 !important;
+      margin: 0 !important;
+      text-align: center;
+    }
+
+    .suspense-timer {
+      position: absolute;
+      bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px));
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      max-width: calc(100% - 28px);
+      padding: 9px 14px;
+      border: 1px solid rgba(255, 117, 143, 0.4);
+      border-radius: 999px;
+      background: rgba(30, 9, 24, 0.8);
+      box-shadow: 0 0 22px rgba(255, 117, 143, 0.22);
+      color: #fff1f2;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .suspense-timer span {
+      color: #ff758f;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .suspense-emoji {
+      font-size: clamp(50px, 15vw, 76px);
+      line-height: 1;
+      filter: drop-shadow(0 8px 22px rgba(255, 209, 102, 0.25));
+    }
+
+    .suspense-feature-copy {
+      color: #fdf0d5 !important;
+      font-size: 18px !important;
+      line-height: 1.5 !important;
+      font-weight: 700;
+      margin: 3px 0 8px !important;
+    }
+
+    .suspense-action {
+      min-height: 44px;
+      box-shadow: 0 0 24px rgba(255, 209, 102, 0.25);
+    }
+
+    .suspense-dare-copy {
+      color: #ffd166 !important;
+      font-size: 17px !important;
+      line-height: 1.5 !important;
+      font-weight: 700;
+      margin: 2px 0 8px !important;
+    }
+
+    .suspense-dare-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .suspense-dare-actions .btn {
+      max-width: 100%;
+    }
+
+    .suspense-fake-button.wiggling {
+      animation: suspenseWiggle 0.45s ease-in-out;
+    }
+
+    .suspense-toast {
+      min-height: 20px;
+      color: #fff1f2;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .suspense-toast.show {
+      opacity: 1;
+    }
+
+    .voice-note-card {
+      width: 100%;
+      max-width: 320px;
+      padding: 18px;
+      border: 1.5px solid rgba(255, 209, 102, 0.4);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .voice-note-label {
+      color: #ffd166;
+      font-family: var(--font-royal);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .voice-waveform {
+      height: 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+
+    .voice-waveform span {
+      width: 4px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(#fff1b8, #ffd166);
+      transform-origin: center;
+    }
+
+    .voice-note-card.playing .voice-waveform span {
+      animation: waveformDance 0.75s ease-in-out infinite alternate;
+      animation-delay: calc(var(--bar-index) * -0.075s);
+    }
+
+    .voice-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .voice-play-button {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 209, 102, 0.75);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #ffd166, #f59e0b);
+      color: #321b22;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(255, 209, 102, 0.3);
+    }
+
+    .voice-progress {
+      width: 100%;
+      accent-color: #ffd166;
+      cursor: pointer;
+    }
+
+    .voice-time {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 11px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .voice-note-error {
+      min-height: 16px;
+      color: #ffb4c0;
+      font-size: 11px;
+    }
+
+    @keyframes suspenseGlow {
+      0%, 100% { opacity: 0.5; transform: scale(0.96); }
+      50% { opacity: 1; transform: scale(1.04); }
+    }
+
+    @keyframes shimmerDrift {
+      to { background-position: 76px 76px; }
+    }
+
+    @keyframes suspenseWiggle {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-7px) rotate(-2deg); }
+      40%, 80% { transform: translateX(7px) rotate(2deg); }
+    }
+
+    @keyframes waveformDance {
+      to { transform: scaleY(3.2); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #suspense-1::after,
+      #suspense-2::after,
+      #suspense-4::after,
+      .voice-note-card.playing .voice-waveform span {
+        animation: none;
+      }
+    }
+
+    /* ==========================================================================
+       SECRET ADMIN DASHBOARD (tanmayog - COMPACT)
+       ========================================================================== */
+    #screen-admin {
+      background: #0b0f19 !important;
+      color: #f8fafc;
+    }
+
+    .admin-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      padding: 12px 14px;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      text-align: left;
+      backdrop-filter: blur(20px);
+    }
+
+    .admin-note-display {
+      background: #06090e;
+      border-radius: 12px;
+      padding: 10px;
+      border: 1px solid #38bdf8;
+      margin: 6px 0;
+      min-height: 60px;
+      max-height: 100px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.4;
+      color: #f8fafc;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Keyframes */
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* ==========================================================================
+       SWEET 16 POPUP MODAL (SCREEN 10 ENTRY - COMPACT)
+       ========================================================================== */
+    .sweet16-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 5, 12, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .sweet16-overlay.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .sweet16-card {
+      max-width: 310px;
+      width: 100%;
+      text-align: center;
+      background: rgba(26, 12, 24, 0.96);
+      border: 1.5px solid rgba(255, 117, 143, 0.4);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 117, 143, 0.25);
+      border-radius: 20px;
+      padding: 16px 14px 14px;
+      position: relative;
+      transform: scale(0.9) translateY(10px);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .sweet16-overlay.show .sweet16-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .sweet16-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 800;
+      color: #ffd166;
+      background: rgba(255, 209, 102, 0.15);
+      border: 1px solid rgba(255, 209, 102, 0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      margin-bottom: 2px;
+      letter-spacing: 0.5px;
+    }
+
+    .sweet16-number-glow {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #ff758f;
+      text-shadow: 0 0 20px rgba(255, 117, 143, 0.7);
+      margin: 2px 0;
+    }
+
+    .sweet16-title {
+      font-size: 15px !important;
+      font-weight: 800 !important;
+      color: #ffffff;
+      margin-bottom: 4px !important;
+    }
+
+    .sweet16-subtext {
+      font-size: 11.5px !important;
+      color: #cbd5e1;
+      line-height: 1.35 !important;
+      margin-bottom: 6px !important;
+    }
+
+    .sweet16-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: #cbd5e1;
+      font-size: 14px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Live Ambient Canvas (Floating Bokeh Orbs, Twinkles & Petals reacting to mouse) -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Confetti Canvas for Cake and Finale celebrations -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Background Music Control -->
+  <div class="top-bar" id="top-bar">
+    <button class="music-pill-btn" id="music-pill-btn" type="button" title="Play / Pause Background Music" aria-label="Play background music">
+      <span class="music-note-icon" id="music-note-icon">🎵</span>
+      <span class="music-text">Music: <strong id="music-status-text">Play 🎶</strong></span>
+      <span class="eq-bars" id="music-eq-bars">
+        <span class="bar bar1"></span>
+        <span class="bar bar2"></span>
+        <span class="bar bar3"></span>
+      </span>
+    </button>
+  </div>
+
+  <!-- Continuous Background Music Audio Element -->
+  <audio id="bg-music" autoplay loop preload="auto"></audio>
+  <audio id="playlist-audio" preload="auto"></audio>
+  <audio id="special-screen-audio" loop preload="auto" src="music.mp3"></audio>
+
+  <!-- ==========================================================================
+       SCREEN 1: THE PRANK SCREEN + ADMIN BACKDOOR
+       ========================================================================== -->
+  <div class="screen active" id="screen-1">
+    <div class="glass-card prank-box">
+      <!-- Input View -->
+      <div id="prank-input-view">
+        <h1 class="prank-title">Hey cutie! 🥰<br><span style="font-size: 13px; font-weight: 500; color: #cbd5e1;">Apna naam batao...</span></h1>
+        
+        <div class="input-group">
+          <input 
+            type="text" 
+            id="user-name-input" 
+            class="frosted-input" 
+            placeholder="Yahan apna naam likho..." 
+            autocomplete="off" 
+            autofocus
+          />
+          <button class="btn btn-pink" id="prank-submit-btn">
+            <span>Submit ✨</span>
+          </button>
+        </div>
+        <p style="font-size: 11px; color: #94a3b8; margin-bottom: 0;">(Ek chhota sa sawal aapke liye! 🌸)</p>
+      </div>
+
+      <!-- Prank Reveal View -->
+      <div class="prank-reveal-view" id="prank-reveal-view">
+        <div style="font-size: 2.2rem; margin-bottom: 4px;">😉🎉</div>
+        <h2 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #ff758f; margin-bottom: 6px;">
+          Arre Dipali! 😉
+        </h2>
+        <p style="font-size: 13px; color: #f1f5f9; margin-bottom: 12px; line-height: 1.45;">
+          Mujhe toh aapka naam pehle se pata tha, main toh bas mazaak kar raha tha! 😂❤️
+        </p>
+        <button class="btn btn-pink" id="prank-continue-btn">
+          <span>Continue ➡️</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN CALENDAR: YOU KNOW WHAT IS TODAY... (OCTOBER 2026 + RIBBON CUT)
+       ========================================================================== -->
+  <div class="screen" id="screen-date">
+    <div class="calendar-wrapper">
+      <h1 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #ffd166; margin-bottom: 2px;">
+        You know what is today...? 💖✨
+      </h1>
+      <p id="ribbon-prompt-hint" style="font-size: 12px; color: #fecdd3; margin-bottom: 6px;">
+        Cut the ribbon to reveal what makes today so magical! 🎀✂️
+      </p>
+
+      <div class="ribbon-stage" id="ribbon-stage-box">
+        <!-- Ribbon Overlay -->
+        <div class="ribbon-overlay" id="ribbon-overlay">
+          <div class="ribbon-band left"></div>
+          <div class="ribbon-band right"></div>
+          
+          <div class="ribbon-center-bow" id="ribbon-center-bow" title="Click to cut the ribbon!">
+            <div class="bow-icon">🎀</div>
+            <button class="btn btn-pink" id="cut-ribbon-btn" style="box-shadow: 0 4px 14px rgba(244,63,94,0.5); padding: 8px 18px; font-size: 12.5px;">
+              <span>✂️ Cut The Ribbon!</span>
+            </button>
+            <span style="font-size: 10px; color: #ffd166; font-weight: 600; margin-top: 2px;">(Tap to cut)</span>
+          </div>
+        </div>
+
+        <!-- Revealed October 2026 Calendar -->
+        <div class="calendar-card" id="revealed-calendar-card" style="width: 100%;">
+          <div style="margin-bottom: 6px;">
+            <div style="font-family: var(--font-heading); font-size: 16px; font-weight: 800; color: #ffd166; letter-spacing: 1px;">
+              🗓️ October 2026
+            </div>
+            <div style="font-size: 11px; color: #cbd5e1;">A Month of Joy, Smiles & Sunshine</div>
+          </div>
+
+          <!-- Calendar Days Grid -->
+          <div class="calendar-grid">
+            <div class="cal-day-name">Sun</div>
+            <div class="cal-day-name">Mon</div>
+            <div class="cal-day-name">Tue</div>
+            <div class="cal-day-name">Wed</div>
+            <div class="cal-day-name">Thu</div>
+            <div class="cal-day-name">Fri</div>
+            <div class="cal-day-name">Sat</div>
+
+            <!-- Empty cells before Thu Oct 1 -->
+            <div class="cal-day-cell empty"></div>
+            <div class="cal-day-cell empty"></div>
+            <div class="cal-day-cell empty"></div>
+            <div class="cal-day-cell empty"></div>
+
+            <!-- Days 1 to 31 -->
+            <div class="cal-day-cell">1</div>
+            <div class="cal-day-cell">2</div>
+            <div class="cal-day-cell">3</div>
+            <div class="cal-day-cell">4</div>
+            <div class="cal-day-cell">5</div>
+            <div class="cal-day-cell">6</div>
+            <div class="cal-day-cell">7</div>
+            <div class="cal-day-cell">8</div>
+            <div class="cal-day-cell">9</div>
+            <div class="cal-day-cell">10</div>
+            <div class="cal-day-cell">11</div>
+            <div class="cal-day-cell">12</div>
+            <div class="cal-day-cell">13</div>
+            <div class="cal-day-cell">14</div>
+            <div class="cal-day-cell">15</div>
+            <div class="cal-day-cell">16</div>
+            <div class="cal-day-cell">17</div>
+            <div class="cal-day-cell">18</div>
+            <div class="cal-day-cell">19</div>
+            <div class="cal-day-cell">20</div>
+            <div class="cal-day-cell">21</div>
+            <div class="cal-day-cell">22</div>
+            <div class="cal-day-cell">23</div>
+            <div class="cal-day-cell">24</div>
+            <div class="cal-day-cell">25</div>
+            
+            <!-- 26 October: Special Heart Highlight -->
+            <div class="cal-day-cell special-day" id="special-date-26" title="Dipali's Birthday! 💖">
+              26
+            </div>
+
+            <div class="cal-day-cell">27</div>
+            <div class="cal-day-cell">28</div>
+            <div class="cal-day-cell">29</div>
+            <div class="cal-day-cell">30</div>
+            <div class="cal-day-cell">31</div>
+          </div>
+
+          <!-- Banner: A Very Special Day -->
+          <div style="background: rgba(255, 117, 143, 0.15); border: 1.5px dashed #ff758f; border-radius: 12px; padding: 6px 10px; margin-top: 4px;">
+            <div style="font-family: var(--font-script); font-size: 15px; font-weight: 700; color: #ffd166; margin-bottom: 2px;">
+              A Very Special Day ✨❤️
+            </div>
+            <p style="font-size: 11px; color: #f8fafc; font-weight: 500; margin-bottom: 0;">
+              <strong>26 October 2011</strong> — Our sweetest princess was born! 🎂👑🌸
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="calendar-next-btn-container" style="margin-top: 6px; display: none; animation: popIn 0.4s ease forwards;">
+        <button class="btn btn-pink" id="to-birthday-wish-btn">
+          <span>Next ➡️</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 2: BIRTHDAY STAR REVEAL + PHOTO SPOTLIGHT
+       ========================================================================== -->
+  <div class="screen" id="screen-2">
+    <div style="max-width: 400px; width: 100%; text-align: center;">
+      <h1 style="font-family: var(--font-script); font-size: 23px; font-weight: 700; color: #ffffff; margin-bottom: 2px; text-shadow: 0 2px 12px rgba(255, 117, 143, 0.4);">
+        🎉 Happy Birthday, Dipali ! 🎂🌸
+      </h1>
+
+      <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 117, 143, 0.25); border: 1px solid rgba(255, 117, 143, 0.45); padding: 4px 14px; border-radius: 999px; color: #ffd166; font-weight: 700; font-size: 12px; margin-bottom: 6px; letter-spacing: 0.3px;">
+        ❤️ My Sweetheart ❤️
+      </div>
+
+      <!-- Heartfelt Birthday Note with Background Image -->
+      <div class="glass-card" style="margin-bottom: 8px; text-align: left; padding: 12px 14px; position: relative; overflow: hidden; border: 1.5px solid rgba(255, 209, 102, 0.45); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55), 0 0 20px rgba(255, 117, 143, 0.2);">
+        <!-- Background Image of Eyes with artistic positioning -->
+        <div style="position: absolute; inset: 0; background-image: url('Snapchat-1893246503.jpg'); background-size: cover; background-position: center 40%; opacity: 0.38; filter: contrast(1.15) saturate(1.1); pointer-events: none; z-index: 0;"></div>
+        <!-- Gradient readability scrim so text is 100% crisp and readable -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(22, 9, 19, 0.75) 0%, rgba(32, 11, 26, 0.72) 50%, rgba(18, 7, 15, 0.82) 100%); pointer-events: none; z-index: 1;"></div>
+
+        <div class="editable-box" contenteditable="true" id="screen2-message" style="position: relative; z-index: 2; font-size: 12px; line-height: 1.55; color: #ffffff; padding: 2px; max-height: calc(100dvh - 220px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ffd166 rgba(255,255,255,0.2); -webkit-overflow-scrolling: touch; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9), 0 2px 8px rgba(0, 0, 0, 0.7);">
+          <div style="font-family: var(--font-royal); font-size: 14px; font-weight: 800; color: #ffd166; margin-bottom: 6px; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 12px rgba(255, 209, 102, 0.6);">
+            🎂❤️ Happy Birthday, My Love! 🥹🫶🏻💋
+          </div>
+          <p style="margin-bottom: 8px; font-weight: 600; color: #fff5f8;">
+            Happy Birthday to my favourite person, my sweetest feeling, and the most special part of my world. ❤️🫀 You have no idea how much you mean to me and how effortlessly you make my heart smile. 🥺💗 If I had to choose one person a thousand times, I would still choose you, every single time, without a second thought. 🫂❤️🩹 You are the person who makes ordinary moments feel magical and simple conversations feel like my favourite memories. 🦋💌 Every little thing about you has a special place in my heart, and no words will ever be enough to explain what you mean to me. 🥹❤️
+          </p>
+          <p style="margin-bottom: 0; color: #ffe4bc; font-weight: 700; text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);">
+            <strong>Happy Birthday, Jaan! 🎂💋❤️ You will always be my favourite person, my favourite feeling, and my favourite kind of happiness. 🫀🌍♾️ I love you more than these little words could ever express. ❤️🧿🫶🏻</strong>
+          </p>
+        </div>
+      </div>
+
+      <button class="btn btn-gold" id="to-screen-3-btn">
+        <span>Next: 100 Shades of Dipali 💛</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 3: GOLDEN 100 NICKNAMES GALLERY (EXCEPTION: SCROLLABLE LIST)
+       ========================================================================== -->
+  <div class="screen" id="screen-3">
+    <div class="nicknames-container">
+      <div class="glass-card" style="text-align: center; margin-bottom: 4px; padding: 8px 12px;">
+        <h1 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #ffd166; margin-bottom: 2px;">
+          ✨ 100 Shades of Dipali ✨
+        </h1>
+        <p style="font-size: 12px; color: #fef08a; margin-bottom: 4px;">
+          Aapke saare cute aur funny naam! Tap ❤️ on your favorites!
+        </p>
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap;">
+          <div style="background: rgba(255, 209, 102, 0.15); color: #ffd166; border: 1px solid rgba(255, 209, 102, 0.35); padding: 3px 10px; border-radius: 999px; font-weight: 700; font-size: 11px;">
+            ❤️ Liked: <span id="liked-count-display">0</span> / 100
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-sm btn-gold" id="filter-all-btn">All (100)</button>
+            <button class="btn btn-sm" id="filter-liked-btn" style="background: rgba(255, 255, 255, 0.1); color: #ffd166; border: 1px solid rgba(255, 255, 255, 0.2);">Only Liked ❤️</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="nicknames-grid" id="nicknames-grid"></div>
+
+      <div style="text-align: center; margin-top: 2px;">
+        <button class="btn btn-green" id="to-screen-4-btn">
+          <span>Go to Garden 🌱</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 4: INTERACTIVE BOTANICAL GARDEN
+       ========================================================================== -->
+  <div class="screen" id="screen-4">
+    <div class="garden-wrapper">
+      <h1 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #6ee7b7; margin-bottom: 2px;">
+        🌱 Plant Flowers For Dipali! 🌸
+      </h1>
+      <p style="font-size: 12px; color: #a7f3d0; margin-bottom: 4px;">
+        Choose a flower and tap anywhere inside the garden plot to plant!
+      </p>
+
+      <div class="picker-bar" id="flower-picker">
+        <button class="picker-btn active" data-flower="🌹"><span>🌹 Rose</span></button>
+        <button class="picker-btn" data-flower="🌷"><span>🌷 Tulip</span></button>
+        <button class="picker-btn" data-flower="🌻"><span>🌻 Sunflower</span></button>
+        <button class="picker-btn" data-flower="🪷"><span>🪷 Lotus</span></button>
+        <button class="picker-btn" data-flower="🌼"><span>🌼 Daisy</span></button>
+        <button class="picker-btn" data-flower="💐"><span>💐 Bouquet</span></button>
+      </div>
+
+      <div class="garden-canvas-box" id="garden-canvas">
+        <div id="garden-hint-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #6ee7b7; font-weight: 700; opacity: 0.85; pointer-events: none; font-size: 11.5px; text-shadow: 0 2px 6px rgba(0,0,0,0.6);">
+          Tap anywhere inside to plant flowers! 🌺
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: center; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
+        <div style="background: rgba(255, 255, 255, 0.1); color: #a7f3d0; border: 1px solid rgba(110, 231, 183, 0.3); padding: 4px 10px; border-radius: 999px; font-weight: 700; font-size: 11px;">
+          Planted: <span id="planted-counter" style="color: #ffd166; font-size: 12px;">0</span> 💐
+        </div>
+        <button id="clear-garden-btn" class="btn btn-sm" style="background: rgba(255, 255, 255, 0.1); color: #fca5a5; border: 1px solid rgba(248, 113, 113, 0.35); padding: 3px 8px; font-size: 10px;">
+          🧹 Clear
+        </button>
+        <button id="shower-garden-btn" class="btn btn-sm btn-green" style="padding: 3px 8px; font-size: 10px;">
+          ✨ Shower
+        </button>
+      </div>
+
+      <div>
+        <button class="btn btn-vintage" id="to-flower-poetry-btn">
+          <span>Next: Flower Poetry 🌸</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOWER POETRY SPOTLIGHT -->
+  <div class="screen" id="screen-flower-poetry">
+    <div class="flower-poetry-photo-frame">
+      <img src="Snapchat-1893246503.jpg" alt="Dipali with flowers" />
+    </div>
+
+    <div class="flower-poetry-card">
+      <p class="flower-poetry-text">कभी तुमने इन फूलों को गौर से देखा है? 🌸❤️
+इनकी खूबसूरती में छुपा एक एहसास देखा है? 🥹🌷
+हर फूल अपनी जगह पर बेहद हसीन है,
+मगर तुम्हारे सामने इनका रंग भी थोड़ा कम रंगीन है। 💗✨
+कभी फूलों के साथ अपनी आँखों को मिलाकर देखा है,
+फिर बताना, तुम्हारी आँखों से खूबसूरत कोई फूल देखा है? 🥹❤️🌹</p>
+    </div>
+
+    <button class="btn btn-sm btn-dark" id="special-audio-toggle" type="button" aria-label="Play flower poetry music" title="Play flower poetry music">▶️ Play music</button>
+    <button class="btn btn-vintage" id="to-vintage-gallery-btn">
+      <span>Next: Vintage Memories 📷</span>
+    </button>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 5: VINTAGE POLAROID VIEWER (VERTICAL SLIDE REEL - 20 MOMENTS)
+       ========================================================================== -->
+  <div class="screen" id="screen-5">
+    <div style="max-width: 380px; width: 100%; height: 100%; max-height: calc(100dvh - 58px); display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center;">
+      <div style="width: 100%; flex-shrink: 0; margin-bottom: 2px;">
+        <h1 style="font-family: var(--font-royal); font-size: 18px; font-weight: 800; color: #ffd166; margin-bottom: 2px;">
+          🎞️ Beautiful Memories with Dipali 🎞️
+        </h1>
+        <div class="polaroid-nav-bar">
+          <button class="btn btn-sm btn-dark" id="polaroid-prev-btn" style="padding: 2px 9px; font-size: 10.5px;">▲ Prev</button>
+          <span class="polaroid-counter-tag" id="polaroid-counter-tag">📸 Memory <span id="polaroid-active-num">1</span> / 20</span>
+          <button class="btn btn-sm btn-gold" id="polaroid-next-btn" style="padding: 2px 9px; font-size: 10.5px;">Next ▼</button>
+        </div>
+      </div>
+
+      <div class="polaroid-vertical-slider" id="polaroid-vertical-slider">
+        <!-- 20 polaroid cards rendered by JavaScript for smooth vertical slide -->
+      </div>
+
+      <div style="margin-top: 3px; width: 100%; flex-shrink: 0;">
+        <button class="btn btn-pink" id="to-screen-6-btn">
+          <span>Celebrate with Doraemon, Shinchan & Cake! 🎂</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 6: DORAEMON & SHINCHAN CAKE PARTY
+       ========================================================================== -->
+  <div class="screen" id="screen-6">
+    <div class="cake-party-content">
+      <div class="cake-party-copy">
+        <h1 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #ff758f; margin-bottom: 2px;">
+          🎉 Doraemon Cake Party! 🎂
+        </h1>
+      </div>
+
+      <div class="doremon-feature bounce-2">
+        <img src="doremon.jpg" id="cartoon-doremon-img" alt="Doraemon" onerror="loadDoremonFallback(this);" />
+      </div>
+
+      <div class="cake-piece" id="cake-interactive-box" role="button" tabindex="0" aria-pressed="false" aria-label="Cut Dipali's birthday cake and blow out the candles" title="Tap the cake to blow out the candles and cut a slice">
+        <div class="cake-stage" aria-hidden="true">
+          <div class="cake-candles">
+            <span class="cake-candle"><i class="candle-flame"></i><i class="candle-smoke"></i></span>
+            <span class="cake-candle"><i class="candle-flame"></i><i class="candle-smoke"></i></span>
+            <span class="cake-candle"><i class="candle-flame"></i><i class="candle-smoke"></i></span>
+          </div>
+          <div class="cake-tier cake-tier-three">
+            <span class="cake-plaque">Dipali 👑</span>
+            <span class="cake-interior"></span>
+            <span class="cake-slice"></span>
+          </div>
+          <div class="cake-tier cake-tier-two"></div>
+          <div class="cake-tier cake-tier-one">
+            <i class="cake-accessory cake-pearl"></i><i class="cake-accessory cake-pearl"></i>
+            <i class="cake-accessory cake-pearl"></i><i class="cake-accessory cake-pearl"></i>
+            <i class="cake-accessory cake-pearl"></i><i class="cake-accessory cake-pearl"></i>
+            <i class="cake-accessory cake-pearl"></i>
+          </div>
+          <div class="cake-stand"></div>
+        </div>
+      </div>
+
+      <p id="cake-instruction-hint" style="font-size: 11px; font-weight: 700; color: #ffd166; margin-bottom: 4px;" aria-live="polite">
+        Tap the cake to blow candles &amp; cut! 🎈
+      </p>
+
+      <div id="cake-cut-banner" class="cake-cut-banner" style="display: none;" aria-live="polite">
+        Yayyy! Happy Birthday Dipali! 🍰✨ (Slice your bite!)
+      </div>
+
+      <div id="cake-next-btn-container" style="display: none;">
+        <button class="btn btn-pink" id="to-dance-screen-btn" type="button">
+          <span>Next 🎉</span>
+        </button>
+      </div>
+    </div>
+    <audio id="screen6-doremon-audio" preload="auto" loop></audio>
+  </div>
+
+  <!-- ==========================================================================
+       SHINCHAN BIRTHDAY DANCE
+       ========================================================================== -->
+  <div class="screen" id="screen-dance">
+    <div class="dance-party-content">
+      <h1>💃 Birthday Dance Party! 🎉</h1>
+      <svg aria-hidden="true" style="position: fixed; width: 0; height: 0; overflow: hidden;">
+        <filter id="remove-dance-background" color-interpolation-filters="sRGB">
+          <feColorMatrix
+            type="matrix"
+            values="1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    1.5 1.5 1.5 0 -0.1"
+          />
+        </filter>
+      </svg>
+      <video
+        class="shinchandance-video"
+        id="shinchandance-video"
+        src="shinchandance.mp4"
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-label="Shinchan dancing at Dipali's birthday party"
+      ></video>
+      <p class="dance-party-caption">Aaj toh party hogii, aaj didi ka birthday jo hai! 🎂🥳</p>
+      <button class="btn btn-pink" id="dance-to-playlist-btn" type="button">
+        <span>Next 🎶</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN PLAYLIST: DIPALI'S MELODY MIXTAPE
+       ========================================================================== -->
+  <div id="screen-playlist" class="card hidden screen">
+    <div class="playlist-header">
+      <h1>🎶 Dipali's Melody Mixtape 🎶</h1>
+      <p class="playlist-subtitle">(Gaane par tap karke sabse pyara hook sunein ✨)</p>
+    </div>
+
+    <div class="vinyl-record" id="vinyl-record" aria-label="Vinyl record player">
+      <div class="vinyl-label" aria-hidden="true">💖</div>
+    </div>
+
+    <div class="now-playing-pill" aria-live="polite">
+      Now Playing: <span id="current-track-name">Select a Song ✨</span>
+    </div>
+
+    <div class="playlist-tracks" aria-label="Dipali's special playlist">
+      <button class="playlist-track" type="button" data-src="song1.mp3" data-title="Tere Hawaale" aria-pressed="false" aria-label="Play Tere Hawaale from Laal Singh Chaddha">
+        <div class="playlist-track-copy">
+          <div class="playlist-track-title">Tere Hawaale <span class="playlist-track-album">— Laal Singh Chaddha</span></div>
+          <div class="playlist-track-hook">"Zameen-o-aasmaan mere, ban gaye ab nishaan mere..."</div>
+        </div>
+        <span class="playlist-track-control" aria-hidden="true">▶</span>
+      </button>
+      <button class="playlist-track" type="button" data-src="song2.mp3" data-title="Ve Kamleya" aria-pressed="false" aria-label="Play Ve Kamleya from Rocky Aur Rani Kii Prem Kahaani">
+        <div class="playlist-track-copy">
+          <div class="playlist-track-title">Ve Kamleya <span class="playlist-track-album">— Rocky Aur Rani Kii Prem Kahaani</span></div>
+          <div class="playlist-track-hook">"Ve kamleya juda na hovein... dil nu sambhal ve..."</div>
+        </div>
+        <span class="playlist-track-control" aria-hidden="true">▶</span>
+      </button>
+      <button class="playlist-track" type="button" data-src="song3.mp3" data-title="Tu Hi Mera" aria-pressed="false" aria-label="Play Tu Hi Mera from Jannat 2">
+        <div class="playlist-track-copy">
+          <div class="playlist-track-title">Tu Hi Mera <span class="playlist-track-album">— Jannat 2</span></div>
+          <div class="playlist-track-hook">"Tu hi mera, mera hai bas tu hi mera..."</div>
+        </div>
+        <span class="playlist-track-control" aria-hidden="true">▶</span>
+      </button>
+      <button class="playlist-track" type="button" data-src="song4.mp3" data-title="Ishq Hai" aria-pressed="false" aria-label="Play Ishq Hai from Mismatched">
+        <div class="playlist-track-copy">
+          <div class="playlist-track-title">Ishq Hai <span class="playlist-track-album">— Mismatched</span></div>
+          <div class="playlist-track-hook">"Dil ko laga jaise naya mod hai yeh..."</div>
+        </div>
+        <span class="playlist-track-control" aria-hidden="true">▶</span>
+      </button>
+      <button class="playlist-track" type="button" data-src="song5.mp3" data-title="Tera Fitoor" aria-pressed="false" aria-label="Play Tera Fitoor from Genius">
+        <div class="playlist-track-copy">
+          <div class="playlist-track-title">Tera Fitoor <span class="playlist-track-album">— Genius</span></div>
+          <div class="playlist-track-hook">"Tera fitoor jab se chadh gaya re..."</div>
+        </div>
+        <span class="playlist-track-control" aria-hidden="true">▶</span>
+      </button>
+    </div>
+
+    <button class="btn btn-gold" id="playlist-to-screen-7-btn" type="button">
+      <span>Heartfelt Words For You 💌</span>
+    </button>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 7: VELVET PINK POETRY & SPECIAL LINES
+       ========================================================================== -->
+  <div class="screen" id="screen-7">
+    <div style="max-width: 400px; width: 100%; text-align: center;">
+      <h1 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #ff758f; margin-bottom: 2px;">
+        💖 Kuch Khaas Lines Dipali Ke Liye 💖
+      </h1>
+      <p style="font-size: 12px; color: #fecdd3; margin-bottom: 4px;">
+        Dil se nikli hui do baatein...
+      </p>
+
+      <div class="shayari-box">
+        <span style="font-size: 1.4rem; color: #ff758f; opacity: 0.7; line-height: 1;">“</span>
+        <div class="shayari-text" contenteditable="true" id="shayari-content">
+          तेरी हँसी से मेरी हर शाम हसीन हो जाए, ❤️🌙<br>
+          तेरे साथ मेरा हर ख़्वाब रंगीन हो जाए। 🥹💗<br><br>
+          तू पास हो तो हर लम्हा ख़ास लगता है, 🫶🏻🫀<br>
+          तेरे बिना ये दिल थोड़ा उदास लगता है। ❤️🩹<br><br>
+          जन्मदिन पर बस इतनी सी ख्वाहिश है मेरी, 🎂💋<br>
+          हर जन्म में तू ही बने मोहब्बत मेरी। ❤️♾️🧿
+        </div>
+        <span style="font-size: 1.4rem; color: #ff758f; opacity: 0.7; float: right; line-height: 1;">”</span>
+      </div>
+
+      <div class="glass-card" style="margin-bottom: 6px; text-align: left; padding: 6px 10px;">
+        <div style="font-size: 11.5px; font-weight: 700; color: #ffd166; margin-bottom: 3px; display: flex; align-items: center; gap: 4px;">
+          <span>✍️</span>
+          <span>Meri Dil Ki Baat:</span>
+        </div>
+        <div class="editable-box" contenteditable="true" id="special-lines-content" style="font-size: 11.5px; line-height: 1.45; color: #fdf2f8; padding: 2px 4px; max-height: 135px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ffd166 rgba(255,255,255,0.1);">
+          <p style="margin-bottom: 6px;">
+            तुम्हारी खूबसूरती को कुछ शब्दों में बयाँ करना मेरे लिए कभी आसान नहीं होगा, क्योंकि तुम सिर्फ़ दिखने में ही नहीं, मेरे एहसासों में भी बेहद खूबसूरत हो। ❤️🥹
+          </p>
+          <p style="margin-bottom: 6px;">
+            तुम्हारी मुस्कान में कुछ ऐसा है, जो मेरे सबसे उदास दिनों को भी खूबसूरत बना देती है। 🌸🫶🏻
+          </p>
+          <p style="margin-bottom: 6px;">
+            तुम्हारी आँखों में एक ऐसा जादू है कि तुम्हें देखते हुए मैं अक्सर भूल जाता हूँ कि मुझे कहना क्या था। 👀❤️
+          </p>
+          <p style="margin-bottom: 6px;">
+            और सच कहूँ, जितना मैं तुम्हें जानता जाता हूँ, उतनी ही तुम मुझे और भी खूबसूरत लगने लगती हो, शायद उस खूबसूरती से भी ज़्यादा, जिसे तुम ख़ुद कभी महसूस नहीं कर पाती। 🥹🫀
+          </p>
+          <p style="margin-bottom: 0;">
+            तुम सिर्फ़ आँखों को अच्छी लगने वाली खूबसूरती नहीं हो, मेरी जान, तुम वो खूबसूरती हो जो एक बार दिल में उतर जाए, तो हमेशा वहीं रहती है। ❤️♾️🧿
+          </p>
+        </div>
+      </div>
+
+      <button class="btn btn-gold" id="to-screen-8-btn">
+        <span>Aapke liye kuchh... pyaara sa.. 💌✨</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       10 REASONS: TOUCH-TO-FLIP CARD STACK
+       ========================================================================== -->
+  <div id="screen-reasons" class="card hidden screen">
+    <div class="reason-header">
+      <h1>✨ 10 Reasons Why You're One of a Kind ✨</h1>
+      <p class="reasons-subtext">(Card par tap karke flip karein aur reason padhein 👇)</p>
+    </div>
+
+    <div class="reason-progress" aria-live="polite">
+      Card <span id="reason-current">1</span> of 10
+    </div>
+
+    <div class="reason-card-viewport">
+      <div class="reason-card" id="reason-card" role="button" tabindex="0" aria-label="Flip reason card">
+        <div class="reason-card-face reason-card-front">
+          <div class="reason-card-icon" id="reason-icon" aria-hidden="true">🌸</div>
+          <div class="reason-card-number" id="reason-number">Reason #1</div>
+          <div class="reason-card-tap">Tap to Reveal 💌</div>
+        </div>
+        <div class="reason-card-face reason-card-back">
+          <div class="reason-card-text" id="reason-text"></div>
+          <div class="reason-card-hint">(Tap to flip back)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reason-navigation" aria-label="Reason card navigation">
+      <button class="btn btn-dark btn-sm" id="reason-prev" type="button" disabled>← Prev</button>
+      <button class="btn btn-dark btn-sm" id="reason-next" type="button">Next →</button>
+    </div>
+
+    <button class="btn btn-gold" id="open-prem-patra-btn" type="button">
+      <span>Open Prem Patra 📜</span>
+    </button>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 8: THE VINTAGE PREM PATRA (EXCEPTION: SCROLLABLE LETTER)
+       ========================================================================== -->
+  <div class="screen" id="screen-8">
+    <div style="max-width: 420px; width: 100%; text-align: center;">
+      <h1 style="font-family: var(--font-royal); font-size: 19px; font-weight: 700; color: #ffd166; margin-bottom: 2px;">
+        ✉️ मेरे प्रिय, आपके लिए प्रेम पत्र ✉️
+      </h1>
+      <p id="prem-patra-subtext" style="font-family: var(--font-hand); font-size: 12px; color: #fed7aa; margin-bottom: 6px;">
+        पत्र खोलने के लिए मुहर (Wax Seal) पर क्लिक करें
+      </p>
+
+      <div class="envelope" id="vintage-envelope">
+        <div style="font-family: var(--font-hand); font-size: 15px; font-weight: 700; color: #ffd166; margin-bottom: 2px;">
+          Dipali Ji Ke Naam 💌
+        </div>
+        <div class="wax-seal" id="wax-seal-btn" title="Click to break wax seal & unfold letter!">
+          <span>⚜️</span>
+        </div>
+        <div style="font-size: 11px; color: #fcd34d; font-style: italic;">
+          Tap to break wax seal & unfold letter
+        </div>
+      </div>
+
+      <div class="letter-sheet" id="unfolded-letter">
+        <div style="font-size: 15px; font-weight: 800; color: #881337; margin-bottom: 6px; border-bottom: 1.5px dashed #d4a373; padding-bottom: 4px; font-family: var(--font-royal);">
+          मेरी जान के नाम ❤️🥹🫶🏻💗
+        </div>
+        <div class="editable-box" contenteditable="true" id="letter-body-text" style="font-size: 12.5px; line-height: 1.6; color: #3b1820; padding: 2px;">
+          <p style="font-weight: 700; font-size: 13.5px; color: #881337; margin-bottom: 6px;">
+            सुनो जानू… 🥹❤️
+          </p>
+          <p style="margin-bottom: 8px;">
+            पता है, कई बार तुमसे बहुत कुछ कहने का मन करता है, लेकिन जब तुमसे बात करता हूँ ना, तो समझ ही नहीं आता कि कैसे बताऊँ कि मेरे मन में तुम्हारे लिए क्या-क्या है। 🙈❤️ इसलिए आज सोचा कि कुछ बातें लिख ही देता हूँ, जो शायद तुमसे सामने से कभी ठीक से कह नहीं पाता। 🫂💌
+          </p>
+          <p style="margin-bottom: 8px;">
+            तुम्हें पता है, मुझे तुमसे बात करना कितना अच्छा लगता है? 🥹❤️ कभी-कभी तो कोई खास बात भी नहीं होती, फिर भी बस तुम्हारी बातें सुनने का मन करता है। तुम्हारा दिन कैसा गया, तुम क्या कर रही हो, तुम खुश हो या किसी बात से परेशान हो… ये सब जानने का मन करता है। 🫶🏻💗 शायद तुम्हें ये छोटी-छोटी बातें लगें, लेकिन मेरे लिए इनकी अपनी एक अलग ही अहमियत है। 🥰❤️
+          </p>
+          <p style="margin-bottom: 8px;">
+            सच बताऊँ, मैं हर बार अपने मन की बात सही तरीके से कह नहीं पाता। कभी कुछ कहना होता है तो कह नहीं पाता, कभी मज़ाक में बात टाल देता हूँ और कभी बस सोचता रह जाता हूँ कि तुम्हें कैसे समझाऊँ। 🥺❤️ लेकिन इसका मतलब ये बिल्कुल नहीं है कि मेरे मन में कुछ नहीं है। तुम्हारे लिए जो महसूस करता हूँ, वो मेरे लिए बहुत सच्चा है। 💗🫀 और मैं चाहता हूँ कि तुम कभी भी मेरे प्यार को लेकर उलझन में मत रहना। 🥹🫶🏻
+          </p>
+          <p style="margin-bottom: 8px;">
+            और तुम्हारी एक बात बताऊँ? 🙈❤️ मुझे तुम्हारी छोटी-छोटी आदतें भी बहुत प्यारी लगती हैं। कभी तुम्हारा बेवजह हँसना, कभी छोटी-सी बात पर रूठ जाना, कभी अपनी बात मनवाने के लिए ज़िद करना और कभी ऐसी बातें करना कि मुझे समझ ही न आए कि तुम्हें क्या जवाब दूँ। 😂😭❤️ सच में, तुम्हारी ऐसी बातें मुझे बहुत अच्छी लगती हैं। तुम्हें शायद अपनी इन आदतों का एहसास भी नहीं होगा, लेकिन मैं इन्हें बहुत ध्यान से महसूस करता हूँ। 🥹💋💗
+          </p>
+          <p style="margin-bottom: 8px;">
+            मैं जानता हूँ कि मैं भी कोई परफ़ेक्ट इंसान नहीं हूँ। मुझसे भी गलतियाँ होंगी, कभी मैं तुम्हारी बात नहीं समझ पाऊँगा और कभी तुम मेरी बात नहीं समझ पाओगी। 🥺 लेकिन मैं चाहता हूँ कि जब भी हमारे बीच कुछ गलत हो, हम एक-दूसरे से बात करें। कोई बात बुरी लगे तो मुझे बताना, मुझसे नाराज़ हो तो वो भी बता देना, लेकिन अपनी परेशानी अकेले मत सहना। ❤️🫂 मैं हर बार तुम्हारी परेशानी का हल निकाल पाऊँ, ये ज़रूरी नहीं, पर तुम्हारी बात सुनना और तुम्हें समझना मेरे लिए बहुत ज़रूरी है। 🫶🏻💌
+          </p>
+          <p style="margin-bottom: 8px;">
+            एक बात और, मेरी जान… 🥹💗 मैं चाहता हूँ कि तुम मेरे सामने बिल्कुल अपने जैसी रहो। तुम्हें हर बार खुश रहने का नाटक करने की ज़रूरत नहीं है और न ही अपनी परेशानियाँ छिपाने की। अगर कभी तुम्हारा मन उदास हो, किसी से बात करने का मन न हो या बस चुप रहने का मन करे, तो भी कोई बात नहीं। ❤️🩹 तुम्हें हर बार मुझे कुछ समझाने की ज़रूरत नहीं है। मैं बस इतना चाहता हूँ कि तुम मेरे साथ सहज महसूस करो और तुम्हें ऐसा लगे कि तुम बिना किसी डर के अपनी बात कह सकती हो। 🫂❤️
+          </p>
+          <p style="margin-bottom: 8px;">
+            पता है, मैं तुम्हारे साथ बहुत सारी छोटी-छोटी यादें बनाना चाहता हूँ। 🥹💗 ऐसी यादें जिनके बारे में सोचकर बाद में हम हँसें। कभी बेवजह की बातें, कभी छोटी-सी नोकझोंक, कभी एक-दूसरे को चिढ़ाना और कभी किसी छोटी-सी बात पर बहुत देर तक हँसते रहना। 😂❤️ मैं चाहता हूँ कि हमारे पास ऐसी बहुत सारी बातें हों, जिन्हें याद करके हम कह सकें कि हाँ, ये पल सच में बहुत अच्छे थे। 🫶🏻🌷
+          </p>
+          <p style="margin-bottom: 8px;">
+            मैं तुमसे बड़े-बड़े वादे करके तुम्हें कुछ यक़ीन दिलाना नहीं चाहता। मैं बस चाहता हूँ कि हम एक-दूसरे को समझें, एक-दूसरे की इज़्ज़त करें और जो भी हमारे बीच है, उसे सच्चाई से निभाएँ। ❤️🧿 मेरे लिए सिर्फ़ ये कहना मायने नहीं रखता कि मैं तुमसे प्यार करता हूँ, बल्कि ये भी मायने रखता है कि मैं तुम्हारे साथ कैसा व्यवहार करता हूँ, तुम्हारी बातों को कितना समझता हूँ और तुम्हारी भावनाओं की कितनी क़दर करता हूँ। 🥹💗
+          </p>
+          <p style="margin-bottom: 8px;">
+            और हाँ, कभी-कभी अगर मैं अपनी भावनाएँ ठीक से बता न पाऊँ, तो ये मत समझना कि मेरे पास कहने के लिए कुछ नहीं है। 😭❤️ सच तो ये है कि कई बार तुम्हारे लिए इतना कुछ महसूस होता है कि समझ ही नहीं आता कि कहाँ से शुरू करूँ। 🙈💋 मैं बस चाहता हूँ कि तुम मुझे समझने की कोशिश करना, जैसे मैं तुम्हें समझने की कोशिश करना चाहता हूँ। 🫂🫶🏻
+          </p>
+          <p style="margin-bottom: 8px;">
+            आख़िर में बस इतना कहना है कि तुम्हारा मेरी ज़िंदगी में होना मेरे लिए बहुत मायने रखता है। ❤️🥹 मैं तुम्हारे बारे में और जानना चाहता हूँ, तुम्हारी पसंद-नापसंद समझना चाहता हूँ, तुम्हारे सपनों के बारे में सुनना चाहता हूँ और तुम्हारे साथ ऐसी बातें बाँटना चाहता हूँ जो हम किसी और से शायद इतनी आसानी से न कह पाएँ। 💌💗
+          </p>
+          <p style="margin-bottom: 4px;">
+            तुम्हें ये सब पढ़कर कैसा लगेगा, ये तो मुझे नहीं पता, लेकिन मैंने जो भी लिखा है, दिल से लिखा है। 🥹❤️ हो सकता है मैं अपनी सारी बातें इसमें भी न लिख पाया होऊँ, क्योंकि कुछ भावनाएँ ऐसी होती हैं जिन्हें समझाना थोड़ा मुश्किल होता है। लेकिन हाँ, मैं चाहता था कि तुम ये सब जानो, क्योंकि तुम मेरे लिए सच में बहुत ख़ास हो। 🫶🏻💖🧿
+          </p>
+        </div>
+        <div style="margin-top: 10px; text-align: right; font-size: 13.5px; font-weight: 800; color: #881337; border-top: 1px dashed #d4a373; padding-top: 6px;">
+          सिर्फ़ तुम्हारा। ❤️🫶🏻💋
+        </div>
+      </div>
+
+      <div id="screen-8-next-container" style="margin-top: 6px;">
+        <button class="btn btn-vintage" id="to-screen-9-btn">
+          <span>Next: Special Note 💌 ➡️</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 9: DIPALI'S PRIVATE RETURN NOTE
+       ========================================================================== -->
+  <div class="screen" id="screen-9">
+    <div class="glass-card" style="max-width: 380px; width: 100%; text-align: left; border-top: 5px solid #ff758f; padding: 12px 14px;">
+      <h1 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #ffd166; margin-bottom: 2px;">
+        💌 A Sweet Note For Me?
+      </h1>
+      <p style="font-size: 12px; color: #cbd5e1; margin-bottom: 6px;">
+        Agar aap kuch kehna chahein ya koi reply chhodna chahein:
+      </p>
+
+      <div id="note-saved-toast" style="display: none; background: #059669; color: #ffffff; padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; margin-bottom: 6px; text-align: center;">
+        💖 Note saved successfully with love!
+      </div>
+
+      <textarea 
+        class="notepad-textarea" 
+        id="dipali-note-input" 
+        placeholder="Dipali ji, dil ki baat yahan likhiye... Aapka message secret dashboard me Tanmay padhenge! ✨"
+      ></textarea>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button class="btn btn-pink" id="save-note-continue-btn">
+          <span>Save Note & Continue ✨</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 10: GRAND FINALE (GOLDEN BLESSINGS)
+       ========================================================================== -->
+  <div class="screen" id="screen-10">
+    <div style="max-width: 400px; width: 100%; text-align: center;">
+      <h1 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: #ffd166; margin-bottom: 2px;">
+        🌟 Blessings & Best Wishes 🌟
+      </h1>
+      <p style="font-size: 12px; color: #fbcfe8; margin-bottom: 4px;">
+        Wishing you the most magical year ahead, Dipali! 🎂✨
+      </p>
+
+      <div class="glass-card" style="margin-bottom: 6px; padding: 10px 14px; text-align: left;">
+        <div style="font-family: var(--font-royal); font-size: 15px; font-weight: 800; color: #ffd166; margin-bottom: 6px; border-bottom: 1px dashed rgba(255, 209, 102, 0.4); padding-bottom: 4px;">
+          मेरी जान, ❤️🥹🫶🏻
+        </div>
+
+        <div class="editable-box" contenteditable="true" id="finale-wishes-text" style="font-size: 12px; line-height: 1.6; color: #fdf2f8; padding: 2px; max-height: calc(100dvh - 230px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #ffd166 rgba(255,255,255,0.15); -webkit-overflow-scrolling: touch;">
+          <p style="margin-bottom: 8px;">
+            आज तुम्हारे जन्मदिन पर मैं बस यही चाहता हूँ कि तुम हमेशा ऐसी ही रहो जैसी तुम हो। 🥹💗 तुम्हारी प्यारी-सी मुस्कान, तुम्हारी बातें, तुम्हारी शरारतें और तुम्हारा ये प्यारा-सा अंदाज़ कभी न बदले। 🧿❤️ तुम हमेशा हँसती रहो, खुश रहो और तुम्हारी ज़िंदगी में कभी खुशियों की कमी न हो। 🫂🌸 तुम्हारे सारे सपने पूरे हों, तुम्हें ज़िंदगी में वो सब मिले जिसकी तुम दिल से ख्वाहिश करती हो। 🤍✨ जब भी तुम उदास हो, तुम्हारे पास मुस्कुराने की कोई न कोई वजह ज़रूर हो और जब भी तुम थक जाओ, तुम्हें थोड़ा सुकून मिल सके। 🥹❤️
+          </p>
+          <p style="margin-bottom: 8px;">
+            भगवान तुम्हें हमेशा अपनी हिफ़ाज़त में रखे, तुम्हें हर बुरी नज़र से बचाए और तुम्हारे चेहरे की ये प्यारी-सी मुस्कान हमेशा बनाए रखे। 🤲🏻🧿💗 मैं चाहता हूँ कि तुम ज़िंदगी में बहुत आगे बढ़ो, अपने हर सपने को पूरा करो और एक दिन अपने आप पर गर्व करो। ❤️🫶🏻 तुम जैसी हो, वैसी ही रहना, क्योंकि तुम्हारी यही सादगी, तुम्हारी यही बातें और तुम्हारा यही अंदाज़ तुम्हें मेरे लिए इतना ख़ास बनाता है। 🥹🌷
+          </p>
+          <p style="margin-bottom: 8px;">
+            और हाँ, मेरी एक छोटी-सी ख्वाहिश और है… ❤️🙈 तुम्हारे आने वाले हर अच्छे-बुरे वक़्त में मैं तुम्हारे साथ रहूँ। हमारी ज़िंदगी में चाहे कितने भी बदलाव आएँ, हम एक-दूसरे का साथ, भरोसा और प्यार कभी न खोएँ। 🫂💞 मैं चाहता हूँ कि हमारी कहानी में हम दोनों के लिए हमेशा जगह रहे और हम हर दिन एक-दूसरे को थोड़ा और बेहतर समझें। 🥹❤️ मैं दिल से चाहता हूँ कि तुम मेरी ज़िंदगी का हिस्सा बनी रहो और हमारा ये रिश्ता हमेशा प्यार और सच्चाई से भरा रहे। ♾️🫶🏻
+          </p>
+          
+          <div style="font-weight: 800; font-size: 12.5px; color: #ffd166; margin: 10px 0 4px;">
+            और सबसे आख़िर में… 🥹❤️
+          </div>
+          <p style="margin-bottom: 8px;">
+            तुम्हारा मेरी ज़िंदगी में आने के लिए तुम्हारा जितना शुक्रिया करूँ, उतना कम है। 🫶🏻💗 शायद तुम्हें अंदाज़ा भी नहीं है कि तुम्हारा मेरी ज़िंदगी में होना मेरे लिए कितना मायने रखता है। तुमसे मिलने, तुम्हें जानने और तुमसे प्यार करने का मौका मिला, इसके लिए मैं सच में बहुत शुक्रगुज़ार हूँ। 🥹❤️💋
+          </p>
+          
+          <div style="background: rgba(255, 117, 143, 0.18); border-left: 3px solid #ff758f; padding: 6px 10px; border-radius: 8px; margin: 8px 0; font-weight: 700; color: #fff1f2;">
+            बस हमेशा खुश रहना, मेरी जान। तुम्हारी मुस्कान बनी रहे, तुम्हारा दिल हमेशा खुश रहे और हमारी ज़िंदगी में एक-दूसरे के लिए ये ख़ास जगह हमेशा बनी रहे। 🧿❤️🫂
+          </div>
+
+          <div style="font-family: var(--font-royal); font-size: 14px; font-weight: 800; color: #ffd166; margin-top: 8px; text-align: center; text-shadow: 0 2px 10px rgba(255, 209, 102, 0.4);">
+            जन्मदिन मुबारक हो, मेरी जान! 🎂🎀💋❤️♾️
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+        <button class="btn btn-gold btn-sm" id="celebrate-again-btn">
+          <span>🎊 Blast Confetti</span>
+        </button>
+        <button class="btn btn-dark btn-sm" id="restart-flow-btn">
+          <span>Celebrate Again 🎈</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       POST-FINALE SUSPENSE SEQUENCE
+       ========================================================================== -->
+  <div class="screen suspense-screen" id="suspense-1">
+    <div class="suspense-content">
+      <h1 class="suspense-heading">Areyy itna jaldi khatam thodi na hoga... 😏</h1>
+      <p class="suspense-copy">Aapko laga bas itna hi tha? Picture abhi baaki hai... ✨</p>
+    </div>
+    <div class="suspense-timer" aria-live="polite">
+      ⏳ Ruko ruko... Sabr ka phal meetha hota hai: <span id="suspense-timer">15</span>s
+    </div>
+  </div>
+
+  <div class="screen suspense-screen" id="suspense-2">
+    <div class="suspense-content">
+      <div class="suspense-emoji" aria-hidden="true">🎁✨</div>
+      <p class="suspense-feature-copy">Aapke liye sabse bada wala surprise abhi bacha hai... 🙈</p>
+      <button class="btn btn-gold suspense-action" id="suspense-reveal-btn" type="button">
+        <span>Dekhne ke liye yahan tap karein! 👉🎁</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="screen suspense-screen" id="suspense-3">
+    <div class="suspense-content">
+      <div class="suspense-emoji" aria-hidden="true">🫣👀</div>
+      <h1 class="suspense-heading">Ruko ruko... pehle ek sach batao!</h1>
+      <p class="suspense-dare-copy">Pakka aap ready ho na? Dil thaam ke baithna! 💓</p>
+      <div class="suspense-dare-actions">
+        <button class="btn btn-gold suspense-action" id="suspense-ready-btn" type="button">
+          <span>Haan baba, 100% Ready hoon! 🚀</span>
+        </button>
+        <button class="btn btn-dark suspense-fake-button" id="suspense-not-ready-btn" type="button">
+          <span>Nahi, thoda darr lag raha hai 🙈</span>
+        </button>
+        <div class="suspense-toast" id="suspense-toast" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen suspense-screen" id="suspense-4">
+    <div class="suspense-content">
+      <header>
+        <h1 class="suspense-heading">✨ Ye Lo Ji, Bada Wala Surprise! ✨</h1>
+        <p class="suspense-copy">Kuch baatein likhi nahi ja sakti... sirf mehsus ki ja sakti hain. 🎧🤍</p>
+      </header>
+
+      <div class="voice-note-card" id="voice-note-card">
+        <div class="voice-note-label">A PERSONAL VOICE NOTE 💌</div>
+        <div class="voice-waveform" aria-hidden="true">
+          <span style="--bar-index: 0"></span><span style="--bar-index: 1"></span>
+          <span style="--bar-index: 2"></span><span style="--bar-index: 3"></span>
+          <span style="--bar-index: 4"></span><span style="--bar-index: 5"></span>
+          <span style="--bar-index: 6"></span><span style="--bar-index: 7"></span>
+          <span style="--bar-index: 8"></span><span style="--bar-index: 9"></span>
+          <span style="--bar-index: 10"></span><span style="--bar-index: 11"></span>
+          <span style="--bar-index: 12"></span><span style="--bar-index: 13"></span>
+          <span style="--bar-index: 14"></span><span style="--bar-index: 15"></span>
+          <span style="--bar-index: 16"></span><span style="--bar-index: 17"></span>
+          <span style="--bar-index: 18"></span><span style="--bar-index: 19"></span>
+          <span style="--bar-index: 20"></span><span style="--bar-index: 21"></span>
+          <span style="--bar-index: 22"></span><span style="--bar-index: 23"></span>
+          <span style="--bar-index: 24"></span>
+        </div>
+        <audio id="voice-note-audio" preload="auto" src="voice-note.wav"></audio>
+        <div class="voice-controls">
+          <button class="voice-play-button" id="voice-note-play-btn" type="button" aria-label="Play voice note">▶️</button>
+          <input class="voice-progress" id="voice-note-progress" type="range" min="0" max="47.5546" value="0" step="0.1" aria-label="Voice note playback position">
+          <div class="voice-time">
+            <span id="voice-note-current-time">0:00</span>
+            <span id="voice-note-duration">0:48</span>
+          </div>
+          <div class="voice-note-error" id="voice-note-error" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <button class="btn btn-gold suspense-action" id="suspense-reset-btn" type="button">
+        <span>Ab sach mein shuru se dekhna hai? 🔄</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SECRET ADMIN DASHBOARD (tanmayog)
+       ========================================================================== -->
+  <div class="screen" id="screen-admin">
+    <div class="admin-card">
+      <div style="display: inline-block; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid #38bdf8; padding: 2px 10px; border-radius: 999px; font-size: 10px; font-weight: 700; margin-bottom: 6px;">
+        ⚡ RESTRICTED ACCESS • AUTHORIZED: TANMAY
+      </div>
+      <h1 style="font-size: 18px; font-weight: 800; color: #f43f5e; margin-bottom: 2px;">
+        🕵️ Secret Admin Panel (Tanmayog)
+      </h1>
+      <p style="font-size: 11.5px; color: #94a3b8; margin-bottom: 6px;">
+        Dipali's private return note from Screen 9 saved in localStorage:
+      </p>
+
+      <div style="font-size: 11.5px; font-weight: 600; color: #34d399; margin-bottom: 2px;">
+        📝 Dipali's Message:
+      </div>
+
+      <div class="admin-note-display" id="admin-note-content"></div>
+
+      <div id="admin-note-timestamp" style="font-size: 10px; color: #7dd3fc; margin-top: 4px;"></div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px;">
+        <button class="btn btn-sm btn-pink" id="admin-copy-btn">📋 Copy</button>
+        <button class="btn btn-sm btn-dark" id="admin-test-note-btn">🧪 Sample</button>
+        <button class="btn btn-sm" id="admin-clear-btn" style="background:#ef4444; color:#fff;">🗑️ Clear</button>
+        <button class="btn btn-sm btn-gold" id="admin-back-btn" style="margin-left: auto;">Home 🔄</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MILESTONE 15 POPUP MODAL (Triggers automatically upon entering Screen 10)
+       ========================================================================== -->
+  <div id="sweet16-modal-overlay" class="sweet16-overlay">
+    <div class="sweet16-card">
+      <button class="sweet16-close-btn" id="sweet16-close-x" title="Close popup">✕</button>
+      <div class="sweet16-number-glow">15 ✨</div>
+      <h2 class="sweet16-title">
+        Congrats for completing your 15th year in the world cutie! 🥰💖
+      </h2>
+      <p class="sweet16-subtext">
+        15 wonderful years of spreading smiles, laughter, and pure happiness! May completing your 15th year bring you endless magic, success, and all your dreams fulfilled! 🎂🌸✨
+      </p>
+      <div style="margin-top: 8px;">
+        <button class="btn btn-pink btn-sm" id="sweet16-claim-btn" style="box-shadow: 0 6px 16px rgba(244, 63, 94, 0.4);">
+          <span>Yay! Thank You! 💖🎉</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Photo Lightbox Modal for Uncropped Viewing -->
+  <div id="photo-lightbox-modal" style="display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(0, 0, 0, 0.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); flex-direction: column; align-items: center; justify-content: center; padding: 14px; opacity: 0; transition: opacity 0.3s ease;">
+    <button id="lightbox-close-btn" style="position: absolute; top: 16px; right: 16px; background: rgba(255, 255, 255, 0.22); border: 1.5px solid rgba(255,255,255,0.4); color: #ffffff; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 100;">✕</button>
+    <div style="max-width: 92vw; max-height: 86vh; display: flex; flex-direction: column; align-items: center; text-align: center;">
+      <img id="lightbox-img" src="" alt="Full Memory" style="max-width: 100%; max-height: 76vh; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.9); object-fit: contain; border: 2px solid rgba(255, 209, 102, 0.4);" />
+      <div id="lightbox-caption" style="margin-top: 10px; color: #ffd166; font-family: var(--font-hand); font-size: 15px; font-weight: 700;"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ==========================================================================
+      // LIVE AMBIENT CANVAS BACKGROUND (Bokeh Orbs, Sparkles, Petals, Mouse Interaction)
+      // ==========================================================================
+      const ambCanvas = document.getElementById('ambient-canvas');
+      const ambCtx = ambCanvas ? ambCanvas.getContext('2d') : null;
+      let width = 0;
+      let height = 0;
+
+      function resizeAmbientCanvas() {
+        if (!ambCanvas) return;
+        width = window.innerWidth;
+        height = window.innerHeight;
+        ambCanvas.width = width;
+        ambCanvas.height = height;
+      }
+      window.addEventListener('resize', resizeAmbientCanvas);
+      resizeAmbientCanvas();
+
+      // Mouse tracking for subtle ambient reactivity
+      let mouseX = width / 2;
+      let mouseY = height / 2;
+      let mouseMoved = false;
+
+      window.addEventListener('mousemove', function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        mouseMoved = true;
+      });
+
+      window.addEventListener('touchmove', function (e) {
+        if (e.touches && e.touches[0]) {
+          mouseX = e.touches[0].clientX;
+          mouseY = e.touches[0].clientY;
+          mouseMoved = true;
+        }
+      }, { passive: true });
+
+      // 1. Glowing Bokeh Orbs (Pre-rendered sprites for zero-allocation 120 FPS rendering)
+      const orbColors = [
+        'rgba(255, 182, 193, ',
+        'rgba(254, 205, 211, ',
+        'rgba(254, 240, 138, ',
+        'rgba(221, 214, 254, ',
+        'rgba(167, 243, 208, '
+      ];
+
+      const orbSprites = [];
+      const ORB_SPRITE_SIZE = 128;
+      for (let c = 0; c < orbColors.length; c++) {
+        const oc = document.createElement('canvas');
+        oc.width = ORB_SPRITE_SIZE;
+        oc.height = ORB_SPRITE_SIZE;
+        const octx = oc.getContext('2d');
+        if (octx) {
+          const grad = octx.createRadialGradient(ORB_SPRITE_SIZE / 2, ORB_SPRITE_SIZE / 2, 0, ORB_SPRITE_SIZE / 2, ORB_SPRITE_SIZE / 2, ORB_SPRITE_SIZE / 2);
+          grad.addColorStop(0, orbColors[c] + '1)');
+          grad.addColorStop(0.35, orbColors[c] + '0.6)');
+          grad.addColorStop(0.7, orbColors[c] + '0.2)');
+          grad.addColorStop(1, orbColors[c] + '0)');
+          octx.fillStyle = grad;
+          octx.beginPath();
+          octx.arc(ORB_SPRITE_SIZE / 2, ORB_SPRITE_SIZE / 2, ORB_SPRITE_SIZE / 2, 0, Math.PI * 2);
+          octx.fill();
+        }
+        orbSprites.push(oc);
+      }
+
+      const orbs = [];
+      for (let i = 0; i < 16; i++) {
+        orbs.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: 50 + Math.random() * 80,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          baseAlpha: 0.12 + Math.random() * 0.15,
+          pulseSpeed: 0.01 + Math.random() * 0.02,
+          pulseOffset: Math.random() * Math.PI * 2,
+          colorIdx: Math.floor(Math.random() * orbColors.length)
+        });
+      }
+
+      // 2. Twinkling Sparkle Particles
+      const sparkles = [];
+      for (let i = 0; i < 35; i++) {
+        sparkles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: 2 + Math.random() * 3.5,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          twinkleSpeed: 0.02 + Math.random() * 0.04,
+          twinkleOffset: Math.random() * Math.PI * 2
+        });
+      }
+
+      // 3. Drifting Floral Petals (with zero shadowBlur overhead)
+      const petals = [];
+      const petalTypes = ['🌸', '🌷', '🌺', '🌼', '✨'];
+      for (let i = 0; i < 16; i++) {
+        petals.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          size: 14 + Math.random() * 14,
+          vx: (Math.random() - 0.5) * 0.6 + 0.3,
+          vy: 0.5 + Math.random() * 0.8,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.02,
+          char: petalTypes[Math.floor(Math.random() * petalTypes.length)],
+          swaySpeed: 0.015 + Math.random() * 0.02,
+          swayOffset: Math.random() * Math.PI * 2,
+          swayAmp: 15 + Math.random() * 25
+        });
+      }
+
+      let time = 0;
+      let lastAmbientTime = performance.now();
+
+      function renderAmbientScene(timestamp) {
+        if (!ambCtx) return;
+        const now = timestamp || performance.now();
+        const dt = Math.min((now - lastAmbientTime) / 1000, 0.05);
+        lastAmbientTime = now;
+        const dtScale = dt * 60; // normalized to standard 60fps frame delta
+
+        ambCtx.clearRect(0, 0, width, height);
+        time += 0.02 * dtScale;
+
+        // Render Glowing Bokeh Orbs (Fast GPU sprite blits, 0 GC allocations)
+        for (let i = 0; i < orbs.length; i++) {
+          const o = orbs[i];
+          o.x += o.vx * dtScale;
+          o.y += o.vy * dtScale;
+
+          if (o.x < -o.radius) o.x = width + o.radius;
+          if (o.x > width + o.radius) o.x = -o.radius;
+          if (o.y < -o.radius) o.y = height + o.radius;
+          if (o.y > height + o.radius) o.y = -o.radius;
+
+          if (mouseMoved) {
+            const dx = o.x - mouseX;
+            const dy = o.y - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 180 && dist > 1) {
+              o.x += (dx / dist) * 0.8 * dtScale;
+              o.y += (dy / dist) * 0.8 * dtScale;
+            }
+          }
+
+          const currentAlpha = o.baseAlpha + Math.sin(time * o.pulseSpeed * 60 + o.pulseOffset) * 0.06;
+          ambCtx.globalAlpha = Math.max(0.01, currentAlpha);
+          const d = o.radius * 2;
+          ambCtx.drawImage(orbSprites[o.colorIdx], o.x - o.radius, o.y - o.radius, d, d);
+        }
+
+        // Render Twinkles (pure fast vector cross, 0 Gaussian blur passes)
+        for (let i = 0; i < sparkles.length; i++) {
+          const s = sparkles[i];
+          s.x += s.vx * dtScale;
+          s.y += s.vy * dtScale;
+
+          if (s.x < 0) s.x = width;
+          if (s.x > width) s.x = 0;
+          if (s.y < 0) s.y = height;
+          if (s.y > height) s.y = 0;
+
+          const alpha = 0.3 + 0.6 * Math.sin(time * s.twinkleSpeed * 60 + s.twinkleOffset);
+          if (alpha > 0.05) {
+            ambCtx.globalAlpha = alpha;
+            ambCtx.fillStyle = '#ffffff';
+
+            ambCtx.beginPath();
+            ambCtx.moveTo(s.x, s.y - s.size * 1.5);
+            ambCtx.lineTo(s.x + s.size * 0.4, s.y);
+            ambCtx.lineTo(s.x, s.y + s.size * 1.5);
+            ambCtx.lineTo(s.x - s.size * 0.4, s.y);
+            ambCtx.closePath();
+            ambCtx.fill();
+
+            ambCtx.beginPath();
+            ambCtx.moveTo(s.x - s.size * 1.5, s.y);
+            ambCtx.lineTo(s.x, s.y + s.size * 0.4);
+            ambCtx.lineTo(s.x + s.size * 1.5, s.y);
+            ambCtx.lineTo(s.x, s.y - s.size * 0.4);
+            ambCtx.closePath();
+            ambCtx.fill();
+          }
+        }
+
+        // Render Drifting Petals (instant GPU text blit, no software shadowBlur)
+        for (let i = 0; i < petals.length; i++) {
+          const p = petals[i];
+          p.y += p.vy * dtScale;
+          p.rotation += p.rotSpeed * dtScale;
+
+          const currentX = p.x + Math.sin(time * p.swaySpeed * 60 + p.swayOffset) * p.swayAmp;
+
+          if (p.y > height + 40) {
+            p.y = -30;
+            p.x = Math.random() * width;
+          }
+
+          if (mouseMoved) {
+            const dx = currentX - mouseX;
+            const dy = p.y - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 140 && dist > 1) {
+              p.x += (dx / dist) * 1.2 * dtScale;
+            }
+          }
+
+          ambCtx.save();
+          ambCtx.translate(currentX, p.y);
+          ambCtx.rotate(p.rotation);
+          ambCtx.font = `${p.size}px serif`;
+          ambCtx.textAlign = 'center';
+          ambCtx.textBaseline = 'middle';
+          ambCtx.globalAlpha = 0.88;
+          ambCtx.fillText(p.char, 0, 0);
+          ambCtx.restore();
+        }
+
+        requestAnimationFrame(renderAmbientScene);
+      }
+
+      requestAnimationFrame(renderAmbientScene);
+
+      // ==========================================================================
+      // AUDIO SYNTHESIZER (Web Audio API)
+      // ==========================================================================
+      let audioCtx = null;
+
+      function getAudioContext() {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        return audioCtx;
+      }
+
+      function playSound(type) {
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const now = ctx.currentTime;
+
+          if (type === 'pop') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.12);
+          } else if (type === 'bloom') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.exponentialRampToValueAtTime(640, now + 0.18);
+            gain.gain.setValueAtTime(0.22, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.18);
+          } else if (type === 'cheer') {
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, index) => {
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              osc.type = 'triangle';
+              osc.frequency.setValueAtTime(freq, now + index * 0.08);
+              gain.gain.setValueAtTime(0.18, now + index * 0.08);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + index * 0.08 + 0.4);
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(now + index * 0.08);
+              osc.stop(now + index * 0.08 + 0.4);
+            });
+          } else if (type === 'snip') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(1400, now);
+            osc.frequency.exponentialRampToValueAtTime(350, now + 0.09);
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.09);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.09);
+          } else if (type === 'unfold') {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(280, now);
+            osc.frequency.linearRampToValueAtTime(420, now + 0.25);
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.25);
+          }
+        } catch (e) {}
+      }
+
+      // Image Fallbacks for Doraemon & Shinchan
+      window.loadDoremonFallback = function(img) {
+        const count = parseInt(img.dataset.retryCount || '0', 10);
+        if (count === 0) {
+          img.dataset.retryCount = '1';
+          img.src = '/doremon.jpg';
+        } else if (count === 1) {
+          img.dataset.retryCount = '2';
+          img.src = 'https://upload.wikimedia.org/wikipedia/en/b/bd/Doraemon_character.png';
+        } else {
+          img.onerror = null;
+        }
+      };
+      window.loadShinchanFallback = function(img) {
+        const count = parseInt(img.dataset.retryCount || '0', 10);
+        if (count === 0) {
+          img.dataset.retryCount = '1';
+          img.src = '/shinchan.jpg';
+        } else if (count === 1) {
+          img.dataset.retryCount = '2';
+          img.src = 'https://upload.wikimedia.org/wikipedia/en/thumb/0/07/Shin_chan_logo.png/250px-Shin_chan_logo.png';
+        } else {
+          img.onerror = null;
+        }
+      };
+
+      // ==========================================================================
+      // CONTINUOUS BACKGROUND MUSIC CONTROLLER (music.mp3)
+      // ==========================================================================
+      const bgMusic = document.getElementById('bg-music');
+      const screen6DoremonAudio = document.getElementById('screen6-doremon-audio');
+      const playlistAudio = document.getElementById('playlist-audio');
+      const specialScreenAudio = document.getElementById('special-screen-audio');
+      const specialAudioToggle = document.getElementById('special-audio-toggle');
+      const musicPillBtn = document.getElementById('music-pill-btn');
+      const musicNoteIcon = document.getElementById('music-note-icon');
+      const musicStatusText = document.getElementById('music-status-text');
+      const voiceNoteAudio = document.getElementById('voice-note-audio');
+      const voiceNoteCard = document.getElementById('voice-note-card');
+      const voiceNotePlayBtn = document.getElementById('voice-note-play-btn');
+      const voiceNoteProgress = document.getElementById('voice-note-progress');
+      const voiceNoteCurrentTime = document.getElementById('voice-note-current-time');
+      const voiceNoteDuration = document.getElementById('voice-note-duration');
+      const voiceNoteError = document.getElementById('voice-note-error');
+      let musicHasStarted = false;
+      let bgMusicFadeInterval = null;
+      let voiceNoteResumeRequested = false;
+
+      if (bgMusic) {
+        const birthdaySongPath = location.protocol === 'file:'
+          ? 'birthday-song.mp3'
+          : '/birthday-song.mp3';
+        bgMusic.src = new URL(birthdaySongPath, location.href).href;
+        bgMusic.volume = 0.7;
+      }
+
+      if (screen6DoremonAudio) {
+        const doremonSongPath = location.protocol === 'file:'
+          ? 'newdoremon.mp3'
+          : '/newdoremon.mp3';
+        screen6DoremonAudio.src = new URL(doremonSongPath, location.href).href;
+        screen6DoremonAudio.volume = 0.7;
+      }
+
+      function updateMusicUI(isPlaying) {
+        const screen6IsActive = document.getElementById('screen-6')?.classList.contains('active');
+        const playlistIsActive = document.getElementById('screen-playlist')?.classList.contains('active');
+        const musicIsPlaying = screen6IsActive && screen6DoremonAudio
+          ? !screen6DoremonAudio.paused
+          : playlistIsActive && playlistAudio
+            ? !playlistAudio.paused
+            : isPlaying;
+        if (musicPillBtn) {
+          musicPillBtn.disabled = Boolean(voiceNoteAudio && !voiceNoteAudio.paused);
+          musicPillBtn.classList.toggle('playing', musicIsPlaying);
+          musicPillBtn.title = musicIsPlaying ? 'Pause Music' : 'Play Music';
+          musicPillBtn.setAttribute('aria-label', musicIsPlaying ? 'Pause music' : 'Play music');
+        }
+        if (musicNoteIcon) {
+          musicNoteIcon.textContent = musicIsPlaying ? '🎵' : '🔇';
+        }
+        if (musicStatusText) {
+          musicStatusText.textContent = musicIsPlaying ? 'Playing' : 'Paused';
+        }
+      }
+
+      function startScreen6DoremonMusic() {
+        if (!screen6DoremonAudio) return;
+        screen6DoremonAudio.currentTime = 0;
+        screen6DoremonAudio.play().catch(err => {
+          if (err.name !== 'AbortError') {
+            console.error('Doraemon screen music playback error:', err);
+          }
+        });
+      }
+
+      function stopScreen6DoremonMusic() {
+        if (!screen6DoremonAudio) return;
+        screen6DoremonAudio.pause();
+        screen6DoremonAudio.currentTime = 0;
+        updateMusicUI(false);
+      }
+
+      if (screen6DoremonAudio) {
+        screen6DoremonAudio.addEventListener('play', () => updateMusicUI(true));
+        screen6DoremonAudio.addEventListener('pause', () => updateMusicUI(false));
+      }
+
+      function updateSpecialAudioUI(isPlaying) {
+        if (!specialAudioToggle) return;
+        specialAudioToggle.textContent = isPlaying ? '⏸️ Pause music' : '▶️ Play music';
+        specialAudioToggle.title = isPlaying ? 'Pause flower poetry music' : 'Play flower poetry music';
+        specialAudioToggle.setAttribute('aria-label', specialAudioToggle.title);
+      }
+
+      function startSpecialScreenAudio() {
+        if (!specialScreenAudio) return;
+        specialScreenAudio.currentTime = 0;
+        specialScreenAudio.play().then(() => {
+          updateSpecialAudioUI(true);
+        }).catch(err => {
+          updateSpecialAudioUI(false);
+          console.log('Special screen audio playback error:', err);
+        });
+      }
+
+      function stopSpecialScreenAudio() {
+        if (!specialScreenAudio) return;
+        specialScreenAudio.pause();
+        specialScreenAudio.currentTime = 0;
+        updateSpecialAudioUI(false);
+      }
+
+      function resumeBackgroundMusic(softly = false) {
+        if (!bgMusic) return;
+        clearInterval(bgMusicFadeInterval);
+        bgMusicFadeInterval = null;
+        const targetVolume = 0.7;
+        if (softly) bgMusic.volume = 0;
+        bgMusic.play().then(() => {
+          musicHasStarted = true;
+          updateMusicUI(true);
+          if (softly) {
+            bgMusicFadeInterval = setInterval(() => {
+              bgMusic.volume = Math.min(targetVolume, bgMusic.volume + 0.07);
+              if (bgMusic.volume >= targetVolume) {
+                clearInterval(bgMusicFadeInterval);
+                bgMusicFadeInterval = null;
+              }
+            }, 70);
+          }
+        }).catch(err => {
+          bgMusic.volume = targetVolume;
+          if (err.name !== 'NotAllowedError') {
+            console.error('Background music resume error:', err);
+          }
+        });
+      }
+
+      function formatAudioTime(seconds) {
+        if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = Math.floor(seconds % 60).toString().padStart(2, '0');
+        return `${minutes}:${remainingSeconds}`;
+      }
+
+      function finishVoiceNotePlayback() {
+        if (!voiceNoteAudio || !voiceNoteCard || !voiceNotePlayBtn) return;
+        voiceNoteCard.classList.remove('playing');
+        voiceNotePlayBtn.textContent = '▶️';
+        voiceNotePlayBtn.setAttribute('aria-label', 'Play voice note');
+        updateMusicUI(Boolean(bgMusic && !bgMusic.paused));
+        updateVoiceNoteProgress();
+
+        if (bgMusic && bgMusic.paused && !voiceNoteResumeRequested) {
+          voiceNoteResumeRequested = true;
+          resumeBackgroundMusic(true);
+        }
+      }
+
+      function updateVoiceNoteProgress() {
+        if (!voiceNoteAudio || !voiceNoteProgress) return;
+        const duration = Number.isFinite(voiceNoteAudio.duration) ? voiceNoteAudio.duration : 47.5546;
+        voiceNoteProgress.max = String(duration);
+        voiceNoteProgress.value = String(voiceNoteAudio.currentTime || 0);
+        voiceNoteCurrentTime.textContent = formatAudioTime(voiceNoteAudio.currentTime);
+        voiceNoteDuration.textContent = formatAudioTime(Math.ceil(duration));
+      }
+
+      if (voiceNoteAudio && voiceNoteCard && voiceNotePlayBtn) {
+        voiceNotePlayBtn.addEventListener('click', function () {
+          voiceNoteError.textContent = '';
+          if (voiceNoteAudio.paused) {
+            voiceNoteAudio.play().catch(error => {
+              voiceNoteError.textContent = 'Voice note play nahi ho paya. voice-note.wav file check karein.';
+              console.error('Voice note playback error:', error);
+            });
+          } else {
+            voiceNoteAudio.pause();
+          }
+        });
+
+        voiceNoteAudio.addEventListener('play', function () {
+          voiceNoteResumeRequested = false;
+          if (bgMusic) bgMusic.pause();
+          updateMusicUI(false);
+          voiceNoteCard.classList.add('playing');
+          voiceNotePlayBtn.textContent = '⏸️';
+          voiceNotePlayBtn.setAttribute('aria-label', 'Pause voice note');
+        });
+
+        voiceNoteAudio.addEventListener('pause', finishVoiceNotePlayback);
+
+        voiceNoteAudio.addEventListener('ended', finishVoiceNotePlayback);
+        voiceNoteAudio.addEventListener('timeupdate', updateVoiceNoteProgress);
+        voiceNoteAudio.addEventListener('loadedmetadata', updateVoiceNoteProgress);
+        voiceNoteAudio.addEventListener('error', function () {
+          voiceNoteError.textContent = 'Voice note load nahi ho paya. voice-note.wav file check karein.';
+        });
+
+        voiceNoteProgress.addEventListener('input', function () {
+          if (!Number.isFinite(voiceNoteAudio.duration)) return;
+          voiceNoteAudio.currentTime = Number(voiceNoteProgress.value);
+          updateVoiceNoteProgress();
+        });
+      }
+
+      if (specialAudioToggle) {
+        specialAudioToggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (!specialScreenAudio) return;
+          if (specialScreenAudio.paused) {
+            specialScreenAudio.play().then(() => updateSpecialAudioUI(true)).catch(err => {
+              console.log('Special screen audio playback error:', err);
+            });
+          } else {
+            specialScreenAudio.pause();
+          }
+        });
+      }
+
+      if (specialScreenAudio) {
+        specialScreenAudio.addEventListener('play', () => updateSpecialAudioUI(true));
+        specialScreenAudio.addEventListener('pause', () => updateSpecialAudioUI(false));
+      }
+
+      function toggleBgMusic() {
+        if (document.getElementById('screen-6')?.classList.contains('active') && screen6DoremonAudio) {
+          if (screen6DoremonAudio.paused) {
+            screen6DoremonAudio.play().catch(err => {
+              console.error('Doraemon screen music playback error:', err);
+            });
+          } else {
+            screen6DoremonAudio.pause();
+          }
+          playSound('pop');
+          return;
+        }
+        if (document.getElementById('screen-playlist')?.classList.contains('active') && playlistAudio) {
+          if (playlistAudio.paused) {
+            if (activePlaylistTrack) {
+              playlistAudio.play().catch(err => {
+                console.error('Playlist audio playback error:', err);
+              });
+            } else if (playlistRows.length > 0) {
+              playPlaylistTrack(playlistRows[0]);
+            }
+          } else {
+            playlistAudio.pause();
+          }
+          playSound('pop');
+          return;
+        }
+        if (!bgMusic) return;
+        if (voiceNoteAudio && !voiceNoteAudio.paused) return;
+        if (bgMusic.paused) {
+          if (!musicHasStarted) bgMusic.currentTime = 0;
+          bgMusic.play().then(() => {
+            musicHasStarted = true;
+            updateMusicUI(true);
+          }).catch(err => {
+            console.log('Audio playback error:', err);
+          });
+        } else {
+          bgMusic.pause();
+          updateMusicUI(false);
+        }
+        playSound('pop');
+      }
+
+      if (musicPillBtn) {
+        musicPillBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          toggleBgMusic();
+        });
+      }
+
+      if (bgMusic) {
+        bgMusic.addEventListener('play', () => {
+          if (playlistAudio && !playlistAudio.paused) stopPlaylistAudio();
+          updateMusicUI(true);
+        });
+        bgMusic.addEventListener('pause', () => {
+          clearInterval(bgMusicFadeInterval);
+          bgMusicFadeInterval = null;
+          updateMusicUI(false);
+        });
+      }
+
+      function ensureBgMusicPlaying() {
+        if (document.getElementById('screen-flower-poetry')?.classList.contains('active')) return;
+        if (document.getElementById('screen-playlist')?.classList.contains('active')) return;
+        if (document.getElementById('screen-6')?.classList.contains('active')) return;
+        if (bgMusic && bgMusic.paused) {
+          if (!musicHasStarted) bgMusic.currentTime = 0;
+          bgMusic.play().then(() => {
+            musicHasStarted = true;
+            updateMusicUI(true);
+          }).catch(err => {
+            if (err.name !== 'NotAllowedError') {
+              console.error('Mobile gesture play error:', err);
+            }
+          });
+        }
+      }
+
+      window.addEventListener('click', function onFirstTap() {
+        ensureBgMusicPlaying();
+      }, { once: true });
+
+      window.addEventListener('touchstart', function onFirstTap() {
+        ensureBgMusicPlaying();
+      }, { once: true });
+
+      resumeBackgroundMusic();
+
+      // ==========================================================================
+      // CONFETTI SYSTEM
+      // ==========================================================================
+      const confCanvas = document.getElementById('confetti-canvas');
+      const confCtx = confCanvas ? confCanvas.getContext('2d') : null;
+      let confettiPieces = [];
+      let confettiAnimationId = null;
+
+      function resizeConfetti() {
+        if (!confCanvas) return;
+        confCanvas.width = window.innerWidth;
+        confCanvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeConfetti);
+      resizeConfetti();
+
+      const confColors = ['#f43f5e', '#fb7185', '#fbbf24', '#34d399', '#38bdf8', '#a78bfa', '#f472b6'];
+
+      let lastConfettiTime = performance.now();
+
+      function fireConfettiBurst(count = 100, colors = confColors) {
+        resizeConfetti();
+        const spawnTime = performance.now();
+        lastConfettiTime = spawnTime;
+        for (let i = 0; i < count; i++) {
+          confettiPieces.push({
+            x: confCanvas.width / 2 + (Math.random() - 0.5) * 220,
+            y: confCanvas.height * 0.4 + (Math.random() - 0.5) * 120,
+            r: 5 + Math.random() * 6,
+            d: Math.random() * 10,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            tilt: Math.random() * 10 - 10,
+            tiltAngleIncremental: (Math.random() * 0.07) + 0.05,
+            tiltAngle: Math.random() * Math.PI,
+            vx: (Math.random() - 0.5) * 16,
+            vy: (Math.random() - 0.7) * 18,
+            gravity: 0.35,
+            spawnTime: spawnTime
+          });
+        }
+        if (!confettiAnimationId) {
+          confettiAnimationId = requestAnimationFrame(animateConfetti);
+        }
+      }
+
+      function animateConfetti(timestamp) {
+        if (!confCtx || !confCanvas) return;
+        const now = timestamp || performance.now();
+        const dt = Math.min((now - lastConfettiTime) / 1000, 0.05);
+        lastConfettiTime = now;
+        const dtScale = dt * 60; // normalized delta factor for 100Hz, 120Hz, 144Hz
+
+        confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+
+        for (let i = 0; i < confettiPieces.length; i++) {
+          const p = confettiPieces[i];
+          const age = now - p.spawnTime;
+          if (age >= 4000) continue;
+
+          // Smooth fade-out in the last second (between 3s and 4s)
+          let alpha = 1;
+          if (age > 3000) {
+            alpha = Math.max(0, (4000 - age) / 1000);
+          }
+
+          // Smooth frame-rate independent physics
+          p.tiltAngle += p.tiltAngleIncremental * dtScale;
+          p.vx *= Math.pow(0.96, dtScale);
+          p.vy += p.gravity * dtScale;
+          p.x += (p.vx + Math.sin(p.d)) * dtScale;
+          p.y += (p.vy + (Math.cos(p.d) + 3 + p.r / 2) / 2) * dtScale;
+          p.tilt = Math.sin(p.tiltAngle - i / 3) * 14;
+
+          // Ultra-smooth 3D ribbon quad drawing (Zero save/restore GPU pipeline stalls)
+          confCtx.globalAlpha = alpha;
+          confCtx.fillStyle = p.color;
+          const halfW = p.r * 0.7;
+          const halfH = p.r * 1.4 * Math.cos(p.tiltAngle);
+
+          confCtx.beginPath();
+          confCtx.moveTo(p.x + p.tilt - halfW, p.y - halfH);
+          confCtx.lineTo(p.x + p.tilt + halfW, p.y - halfH * 0.8);
+          confCtx.lineTo(p.x + halfW, p.y + halfH);
+          confCtx.lineTo(p.x - halfW, p.y + halfH * 0.8);
+          confCtx.closePath();
+          confCtx.fill();
+        }
+
+        // Only keep particles under 4 seconds old and within viewport
+        confettiPieces = confettiPieces.filter(p => (now - p.spawnTime) < 4000 && p.y < confCanvas.height + 40);
+
+        if (confettiPieces.length > 0) {
+          confettiAnimationId = requestAnimationFrame(animateConfetti);
+        } else {
+          confettiAnimationId = null;
+          confCtx.clearRect(0, 0, confCanvas.width, confCanvas.height);
+        }
+      }
+
+      // ==========================================================================
+      // SCREEN FLOW & DYNAMIC BACKGROUND TRANSITIONS
+      // ==========================================================================
+      const screenBackgrounds = {
+        'screen-1': 'linear-gradient(135deg, #1a0b16 0%, #250f20 50%, #2e1124 100%)',
+        'screen-date': 'linear-gradient(135deg, #200b18 0%, #2f0f23 50%, #3c122a 100%)',
+        'screen-2': 'radial-gradient(ellipse at 50% 40%, #431221 0%, #2e0d17 60%, #1f080f 100%)',
+        'screen-3': 'linear-gradient(135deg, #1f1807 0%, #2c210a 50%, #382a0b 100%)',
+        'screen-4': 'linear-gradient(135deg, #081c15 0%, #102d21 50%, #1b4332 100%)',
+        'screen-flower-poetry': 'linear-gradient(135deg, #28101d 0%, #3a1527 50%, #1c251b 100%)',
+        'screen-5': 'linear-gradient(135deg, #1c1613 0%, #241c18 50%, #2d221c 100%)',
+        'screen-6': 'linear-gradient(135deg, #0d1117 0%, #15162a 50%, #1e1e38 100%)',
+        'screen-dance': 'radial-gradient(ellipse at 50% 35%, #431221 0%, #2a0c16 60%, #1a080f 100%)',
+        'screen-playlist': 'radial-gradient(ellipse at 50% 30%, #431221 0%, #2a0c16 60%, #1a080f 100%)',
+        'screen-7': 'radial-gradient(ellipse at 50% 30%, #431221 0%, #2a0c16 60%, #1a080f 100%)',
+        'screen-reasons': 'radial-gradient(ellipse at 50% 30%, #431221 0%, #2a0c16 60%, #1a080f 100%)',
+        'screen-8': 'linear-gradient(135deg, #1c1613 0%, #251c17 50%, #2d221c 100%)',
+        'screen-9': 'linear-gradient(135deg, #181113 0%, #25161c 50%, #321b22 100%)',
+        'screen-10': 'radial-gradient(ellipse at 50% 30%, #321b22 0%, #231218 60%, #181113 100%)',
+        'suspense-1': 'radial-gradient(ellipse at 50% 45%, #351329 0%, #160b1d 60%, #090711 100%)',
+        'suspense-2': 'radial-gradient(ellipse at 50% 35%, #513614 0%, #24131c 62%, #120c16 100%)',
+        'suspense-3': 'radial-gradient(ellipse at 50% 35%, #40182b 0%, #21101e 65%, #100a14 100%)',
+        'suspense-4': 'radial-gradient(ellipse at 50% 30%, #382117 0%, #1d101b 60%, #0e0a14 100%)',
+        'screen-admin': '#0b0f19'
+      };
+
+      let suspenseTimerInterval = null;
+
+      function startSuspenseTimer() {
+        const timerDisplay = document.getElementById('suspense-timer');
+        if (!timerDisplay) return;
+
+        let secondsRemaining = 15;
+        timerDisplay.textContent = String(secondsRemaining);
+        suspenseTimerInterval = setInterval(() => {
+          secondsRemaining -= 1;
+          timerDisplay.textContent = String(secondsRemaining);
+          if (secondsRemaining > 0) return;
+
+          clearInterval(suspenseTimerInterval);
+          suspenseTimerInterval = null;
+          if (navigator.vibrate) navigator.vibrate(35);
+          goToScreen('suspense-2');
+        }, 1000);
+      }
+
+      function updateTopBar(screenId) {
+        const topBar = document.getElementById('top-bar');
+        topBar.style.display = screenId === 'screen-admin' ? 'none' : 'flex';
+      }
+
+      function goToScreen(screenId) {
+        playSound('pop');
+        if (suspenseTimerInterval !== null) {
+          clearInterval(suspenseTimerInterval);
+          suspenseTimerInterval = null;
+        }
+        const previousScreen = document.querySelector('.screen.active');
+        const previousScreenId = previousScreen ? previousScreen.id : null;
+
+        if (previousScreenId === 'suspense-4' && screenId !== 'suspense-4' && voiceNoteAudio) {
+          voiceNoteAudio.pause();
+          voiceNoteAudio.currentTime = 0;
+        }
+
+        if (previousScreenId === 'screen-playlist' && screenId !== 'screen-playlist') {
+          stopPlaylistAudio();
+        }
+
+        if (screenId === 'screen-flower-poetry' && previousScreenId !== 'screen-flower-poetry') {
+          if (bgMusic) bgMusic.pause();
+          startSpecialScreenAudio();
+        } else if (previousScreenId === 'screen-flower-poetry' && screenId !== 'screen-flower-poetry') {
+          stopSpecialScreenAudio();
+          if (screenId !== 'screen-playlist' && screenId !== 'screen-6') resumeBackgroundMusic();
+        }
+
+        if (previousScreenId === 'screen-6' && screenId !== 'screen-6') {
+          stopScreen6DoremonMusic();
+        }
+
+        const shinchanDanceVideo = document.getElementById('shinchandance-video');
+        if (previousScreenId === 'screen-dance' && screenId !== 'screen-dance' && shinchanDanceVideo) {
+          shinchanDanceVideo.pause();
+          shinchanDanceVideo.currentTime = 0;
+        }
+
+        if (screenId === 'screen-playlist' && previousScreenId !== 'screen-playlist' && bgMusic) {
+          bgMusic.pause();
+        }
+
+        const allScreens = document.querySelectorAll('.screen');
+        allScreens.forEach(s => {
+          s.classList.remove('active');
+          s.style.display = 'none';
+        });
+
+        const targetScreen = document.getElementById(screenId);
+        if (targetScreen) {
+          targetScreen.style.display = 'flex';
+          void targetScreen.offsetWidth;
+          targetScreen.classList.add('active');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (screenId === 'screen-6' && previousScreenId !== 'screen-6') {
+            if (bgMusic) bgMusic.pause();
+            startScreen6DoremonMusic();
+          }
+          if (screenId === 'screen-dance' && previousScreenId !== 'screen-dance' && shinchanDanceVideo) {
+            shinchanDanceVideo.currentTime = 0;
+            shinchanDanceVideo.muted = true;
+            shinchanDanceVideo.volume = 0;
+            shinchanDanceVideo.play().catch(err => {
+              console.error('Shinchan dance video playback error:', err);
+            });
+          }
+          if (screenId === 'screen-playlist' && previousScreenId !== 'screen-playlist' && playlistRows.length > 0) {
+            playPlaylistTrack(playlistRows[0]);
+          }
+        }
+
+        // Apply Mood Background Gradient
+        if (screenBackgrounds[screenId]) {
+          document.body.style.background = screenBackgrounds[screenId];
+        }
+
+        updateTopBar(screenId);
+
+        if (screenId === 'suspense-1') {
+          startSuspenseTimer();
+        }
+
+        if (screenId === 'suspense-4') {
+          fireConfettiBurst(120, ['#ffd166', '#fbbf24', '#fff1b8', '#ff758f']);
+        }
+
+        if (screenId === 'screen-10') {
+          setTimeout(triggerSweet16Popup, 450);
+        }
+
+        if (screenId === 'screen-admin') {
+          loadAdminData();
+        }
+      }
+
+      // ==========================================================================
+      // SCREEN PLAYLIST: DIPALI'S MELODY MIXTAPE
+      // ==========================================================================
+      const vinylRecord = document.getElementById('vinyl-record');
+      const currentTrackName = document.getElementById('current-track-name');
+      const playlistRows = Array.from(document.querySelectorAll('.playlist-track'));
+      let activePlaylistTrack = null;
+
+      function updatePlaylistUI(isPlaying) {
+        playlistRows.forEach(row => {
+          const isSelected = row === activePlaylistTrack;
+          const control = row.querySelector('.playlist-track-control');
+          const title = row.dataset.title;
+          const album = row.querySelector('.playlist-track-album').textContent.replace(/^—\s*/, '');
+          row.classList.toggle('active', isSelected);
+          row.setAttribute('aria-pressed', String(isSelected));
+          row.setAttribute('aria-label', `${isSelected && isPlaying ? 'Pause' : 'Play'} ${title} from ${album}`);
+          control.textContent = isSelected && isPlaying ? 'Ⅱ' : '▶';
+        });
+
+        vinylRecord.classList.toggle('spinning', Boolean(activePlaylistTrack));
+        vinylRecord.classList.toggle('paused', Boolean(activePlaylistTrack) && !isPlaying);
+        currentTrackName.textContent = activePlaylistTrack
+          ? `${isPlaying ? '' : 'Paused — '}${activePlaylistTrack.dataset.title}`
+          : 'Select a Song ✨';
+      }
+
+      function stopPlaylistAudio() {
+        playlistAudio.pause();
+        playlistAudio.currentTime = 0;
+        activePlaylistTrack = null;
+        updatePlaylistUI(false);
+      }
+
+      function playPlaylistTrack(row) {
+        const trackSource = row.dataset.src;
+        if (!trackSource) return;
+
+        if (row === activePlaylistTrack && !playlistAudio.paused) {
+          playlistAudio.pause();
+          updatePlaylistUI(false);
+          return;
+        }
+
+        if (row !== activePlaylistTrack) {
+          playlistAudio.pause();
+          playlistAudio.src = new URL(trackSource, location.href).href;
+          activePlaylistTrack = row;
+        }
+
+        if (bgMusic) {
+          bgMusic.pause();
+          updateMusicUI(false);
+        }
+
+        playlistAudio.play().then(() => {
+          if (row === activePlaylistTrack) updatePlaylistUI(true);
+        }).catch(error => {
+          if (row !== activePlaylistTrack || playlistAudio.paused) return;
+          updatePlaylistUI(false);
+          console.error('Playlist audio playback error:', error);
+        });
+      }
+
+      playlistRows.forEach(row => {
+        row.addEventListener('click', () => playPlaylistTrack(row));
+      });
+
+      playlistAudio.addEventListener('pause', () => {
+        if (activePlaylistTrack) updatePlaylistUI(false);
+        updateMusicUI(false);
+      });
+      playlistAudio.addEventListener('play', () => updateMusicUI(true));
+      playlistAudio.addEventListener('ended', () => {
+        const currentIndex = playlistRows.indexOf(activePlaylistTrack);
+        const nextTrack = playlistRows[currentIndex + 1];
+        if (nextTrack) {
+          playPlaylistTrack(nextTrack);
+          return;
+        }
+        activePlaylistTrack = null;
+        updatePlaylistUI(false);
+        updateMusicUI(false);
+      });
+
+      // ==========================================================================
+      // SCREEN 1: PRANK SCREEN & BACKDOOR
+      // ==========================================================================
+      const nameInput = document.getElementById('user-name-input');
+      const prankSubmitBtn = document.getElementById('prank-submit-btn');
+      const prankInputView = document.getElementById('prank-input-view');
+      const prankRevealView = document.getElementById('prank-reveal-view');
+      const prankContinueBtn = document.getElementById('prank-continue-btn');
+
+      function handlePrankSubmission() {
+        const val = (nameInput.value || '').trim();
+        if (!val) {
+          nameInput.focus();
+          return;
+        }
+
+        // Secret Admin Backdoor: 'tanmayog'
+        if (val.toLowerCase() === 'tanmayog') {
+          playSound('cheer');
+          goToScreen('screen-admin');
+          return;
+        }
+
+        // Normal Prank Reveal
+        playSound('pop');
+        prankInputView.style.display = 'none';
+        prankRevealView.classList.add('show');
+      }
+
+      function checkInput() {
+        ensureBgMusicPlaying();
+        handlePrankSubmission();
+      }
+
+      prankSubmitBtn.addEventListener('click', checkInput);
+      nameInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') checkInput();
+      });
+
+      // Calendar comes BEFORE Birthday wish
+      prankContinueBtn.addEventListener('click', function () {
+        goToScreen('screen-date');
+      });
+
+      // ==========================================================================
+      // SCREEN CALENDAR: RIBBON CUT & OCTOBER 2026
+      // ==========================================================================
+      const ribbonOverlay = document.getElementById('ribbon-overlay');
+      const cutRibbonBtn = document.getElementById('cut-ribbon-btn');
+      const ribbonCenterBow = document.getElementById('ribbon-center-bow');
+      const calendarNextBtnContainer = document.getElementById('calendar-next-btn-container');
+      const ribbonPromptHint = document.getElementById('ribbon-prompt-hint');
+      const specialDate26 = document.getElementById('special-date-26');
+      let ribbonCutDone = false;
+
+      function cutTheRibbon() {
+        if (ribbonCutDone) return;
+        ribbonCutDone = true;
+
+        playSound('snip');
+        ribbonOverlay.classList.add('cut');
+
+        setTimeout(() => {
+          playSound('cheer');
+          fireConfettiBurst(130);
+          ribbonPromptHint.innerHTML = '🎉 <strong>A Very Special Day Revealed!</strong> 💖';
+          calendarNextBtnContainer.style.display = 'block';
+        }, 350);
+      }
+
+      cutRibbonBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        cutTheRibbon();
+      });
+
+      ribbonCenterBow.addEventListener('click', cutTheRibbon);
+
+      specialDate26.addEventListener('click', function () {
+        playSound('bloom');
+        fireConfettiBurst(60);
+      });
+
+      document.getElementById('to-birthday-wish-btn').addEventListener('click', function () {
+        goToScreen('screen-2');
+      });
+
+      // ==========================================================================
+      // SCREEN 2: BIRTHDAY STAR REVEAL
+      // ==========================================================================
+      document.getElementById('to-screen-3-btn').addEventListener('click', function () {
+        goToScreen('screen-3');
+      });
+
+      const changePhotoBtn = document.getElementById('change-photo-btn');
+      if (changePhotoBtn) {
+        changePhotoBtn.addEventListener('click', function () {
+          const photoEl = document.getElementById('dipali-photo-1');
+          const newUrl = prompt('Enter image URL for Dipali:', photoEl.src);
+          if (newUrl && newUrl.trim() !== '') {
+            photoEl.src = newUrl.trim();
+            playSound('pop');
+          }
+        });
+      }
+
+      const photoEl = document.getElementById('dipali-photo-1');
+      if (photoEl) {
+        photoEl.style.cursor = 'pointer';
+        photoEl.addEventListener('click', function () {
+          const newUrl = prompt('Enter image URL for Dipali:', photoEl.src);
+          if (newUrl && newUrl.trim() !== '') {
+            photoEl.src = newUrl.trim();
+            playSound('pop');
+          }
+        });
+      }
+
+      // ==========================================================================
+      // SCREEN 3: 100 NICKNAMES
+      // ==========================================================================
+      const nicknameTitles = [
+        "Miss Deepanjali 👑", "Northstar ⭐", "Golu Molu 🥟", "Drama Queen 🎭", "Pari 🧚‍♀️",
+        "Sunshine ☀️", "Rasgulla 🍯", "Laddu Gopal 🍬", "Cutie Pie 🥧", "Teddy Bear 🧸",
+        "Angry Bird 😡🐤", "Sleeping Beauty 😴", "Maggi Lover 🍜", "Chatpati 🌶️", "Buggu 🧸",
+        "Chhoti Don 🕶️", "Gulab Jamun 🍩", "Dimple Queen ✨", "Pikachu ⚡", "Cupcake 🧁",
+        "Miss Perfect 🌟", "Bhootni 👻", "Betu 🥺❤️", "Chotta Baccha 👶", "Barfi 🧈",
+        "Teekhi Mirchi 🌶️", "Kulfi 🍧", "Shaitaan 😈", "Masoom Bachi 👼", "Tom & Jerry 🐭",
+        "Khadoos 😤", "Sweetheart 💖", "Cute Bacchi 🎀", "Selfie Queen 📸", "Ronhi 🥺",
+        "Mood Swings Champion 🎢", "Pocket Dynamite 💥", "Jaaneman 🌹", "Gusselhi 😤", "Chocolate Girl 🍫",
+        "Panda 🐼", "Bunny 🐰", "Billi Mausi 🐱", "Jaan ❤️", "Buggi 🐥",
+        "Bitti 🌸", "Ice Cream Lover 🍦", "Haseena 💃", "Madam Ji 👩‍💼", "Sherni 🦁",
+        "Lollipop 🍭", "Gulabo 🌺", "Cookie 🍪", "Buttercup 🌼", "Jalebi Baby 🍥",
+        "Nakhrewali 💅", "Dramebaaz 🎬", "Chulbuli 🦋", "Ring Lover 💍", "Golgappa 🧆",
+        "Momos Queen 🥟", "Twinkle Twinkle ⭐", "Sparkle ❇️", "Honey Bee 🐝", "Princess 👸",
+        "Bestie 👭", "Ladanki 🥰", "Duffer (Pyar Se) 🤪", "Sir Drad 🤕", "Moon 🌙",
+        "Cotton Candy 🍬", "Angel Face 😇", "Coffee Mug ☕", "Little Miss Sunshine 🌤️", "Chhupa Rustam 🕵️‍♀️",
+        "Queen of Sass 👑", "Overthinker Pro 🤔", "Midnight Snacker 🥪", "Gappu 🎈", "Sweet Tooth 🍰",
+        "Moon 🌙", "Chota Recharge 🔋", "Gudiya 🪆", "Paglu 🙈", "Masterchef 👩‍🍳",
+        "Silent Storm 🌪️", "Dil Ki Rani 💓", "Forever Young 🌸", "Gossip Girl 🤫", "Laughing Buddha 😂",
+        "Dimple Wali ☺️", "Rainbow 🌈", "Lucky Charm 🍀", "Wonder Woman 🦸‍♀️", "Dream Catcher 🕸️",
+        "Diamond 💎", "Chumma Chaati Special 💋", "Jaanu 🫶", "Kohinoor 💍", "Forever Dipali ❤️"
+      ];
+
+      const nicknamesGrid = document.getElementById('nicknames-grid');
+      const likedCountDisplay = document.getElementById('liked-count-display');
+      let likedCount = 0;
+      let filterOnlyLiked = false;
+
+      function renderNicknames() {
+        nicknamesGrid.innerHTML = '';
+        nicknameTitles.forEach((name, index) => {
+          const num = index + 1;
+          const card = document.createElement('div');
+          card.className = 'nickname-card';
+
+          card.innerHTML = `
+            <div style="text-align: left; overflow: hidden; display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 0.72rem; font-weight: 800; color: #ffd166; background: rgba(255, 209, 102, 0.16); border: 1px solid rgba(255, 209, 102, 0.35); padding: 2px 7px; border-radius: 6px; white-space: nowrap;">#${num}</span>
+              <span style="font-size: 0.95rem; font-weight: 700; color: #ffffff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">${name}</span>
+            </div>
+            <button class="heart-toggle" title="Like this nickname">❤️</button>
+          `;
+
+          const heartBtn = card.querySelector('.heart-toggle');
+          heartBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const isLiked = heartBtn.classList.toggle('active');
+            card.classList.toggle('liked', isLiked);
+            playSound('pop');
+
+            if (isLiked) likedCount++;
+            else likedCount = Math.max(0, likedCount - 1);
+            likedCountDisplay.textContent = likedCount;
+
+            if (filterOnlyLiked && !isLiked) card.style.display = 'none';
+          });
+
+          nicknamesGrid.appendChild(card);
+        });
+      }
+
+      renderNicknames();
+
+      document.getElementById('filter-all-btn').addEventListener('click', function () {
+        filterOnlyLiked = false;
+        this.classList.add('btn-gold');
+        document.getElementById('filter-liked-btn').classList.remove('btn-gold');
+        nicknamesGrid.querySelectorAll('.nickname-card').forEach(c => c.style.display = 'flex');
+      });
+
+      document.getElementById('filter-liked-btn').addEventListener('click', function () {
+        filterOnlyLiked = true;
+        this.classList.add('btn-gold');
+        document.getElementById('filter-all-btn').classList.remove('btn-gold');
+        nicknamesGrid.querySelectorAll('.nickname-card').forEach(c => {
+          c.style.display = c.classList.contains('liked') ? 'flex' : 'none';
+        });
+      });
+
+      document.getElementById('to-screen-4-btn').addEventListener('click', function () {
+        goToScreen('screen-4');
+      });
+
+      // ==========================================================================
+      // SCREEN 4: INTERACTIVE BOTANICAL GARDEN
+      // ==========================================================================
+      let selectedFlower = '🌹';
+      let plantedCount = 0;
+      const gardenCanvas = document.getElementById('garden-canvas');
+      const plantedCounter = document.getElementById('planted-counter');
+      const gardenHintText = document.getElementById('garden-hint-text');
+
+      document.querySelectorAll('.picker-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('.picker-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedFlower = btn.dataset.flower;
+          playSound('pop');
+        });
+      });
+
+      function plantFlowerAt(x, y, emoji) {
+        const el = document.createElement('div');
+        el.className = 'planted-flower';
+        el.textContent = emoji || selectedFlower;
+        const size = 1.6 + Math.random() * 1.2;
+        el.style.fontSize = size + 'rem';
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+
+        gardenCanvas.appendChild(el);
+        plantedCount++;
+        plantedCounter.textContent = plantedCount;
+
+        if (gardenHintText) gardenHintText.style.display = 'none';
+        playSound('bloom');
+      }
+
+      function clearGarden() {
+        gardenCanvas.querySelectorAll('.planted-flower').forEach(f => f.remove());
+        plantedCount = 0;
+        plantedCounter.textContent = '0';
+        if (gardenHintText) gardenHintText.style.display = 'block';
+      }
+
+      function handleGardenTap(e) {
+        const rect = gardenCanvas.getBoundingClientRect();
+        const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+        const clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
+
+        if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+          plantFlowerAt(x, y, selectedFlower);
+        }
+      }
+
+      gardenCanvas.addEventListener('click', handleGardenTap);
+      gardenCanvas.addEventListener('touchstart', function (e) {
+        handleGardenTap(e);
+        e.preventDefault();
+      }, { passive: false });
+
+      document.getElementById('clear-garden-btn').addEventListener('click', function () {
+        clearGarden();
+        playSound('pop');
+      });
+
+      document.getElementById('shower-garden-btn').addEventListener('click', function () {
+        const rect = gardenCanvas.getBoundingClientRect();
+        const flowers = ['🌹', '🌷', '🌻', '🪷', '🌼', '💐', '🌸'];
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const rx = 20 + Math.random() * (rect.width - 40);
+            const ry = 20 + Math.random() * (rect.height - 40);
+            plantFlowerAt(rx, ry, flowers[Math.floor(Math.random() * flowers.length)]);
+          }, i * 65);
+        }
+      });
+
+      document.getElementById('to-flower-poetry-btn').addEventListener('click', function () {
+        goToScreen('screen-flower-poetry');
+      });
+
+      document.getElementById('to-vintage-gallery-btn').addEventListener('click', function () {
+        goToScreen('screen-5');
+      });
+
+      // ==========================================================================
+      // SCREEN 5: 20 VINTAGE POLAROID FRAMES (REAL SNAPCHAT MEMORIES OF DIPALI)
+      // ==========================================================================
+      const polaroidMemories = [
+        { src: 'pics/Snapchat-1018206293.jpg', caption: 'Sweet Moment & Cozy Smiles ✨', pos: '35% 25%' },
+        { src: 'pics/Snapchat-1045817465.jpg', caption: 'Dandiya Nights & Festive Beats 🪘🎊', pos: '50% 18%' },
+        { src: 'pics/Snapchat-1055095889.jpg', caption: 'Shopping Spree & Fun Outfits 🛍️✨', pos: '52% 38%' },
+        { src: 'pics/Snapchat-1269373790.jpg', caption: 'Pretty Sunglasses & Beautiful Smile 🕶️💖', pos: '62% 28%' },
+        { src: 'pics/Snapchat-1419536168.jpg', caption: 'Graceful in Black Saree 🖤✨', pos: '50% 45%' },
+        { src: 'pics/Snapchat-1480337019.jpg', caption: 'Traditional Folk Dance Radiance 💃🌷', pos: '50% 22%' },
+        { src: 'pics/Snapchat-1636596822.jpg', caption: 'Playful Filter & Unlimited Laughs 😂🥰', pos: '28% 42%' },
+        { src: 'pics/Snapchat-1647360598.jpg', caption: 'Fairy Lights & Golden Glow 🌌💫', pos: '50% 30%' },
+        { src: 'pics/Snapchat-1740779538.jpg', caption: 'Party Celebration & Pretty Vibe 🎈✨', pos: '54% 24%' },
+        { src: 'pics/Snapchat-1774462840.jpg', caption: 'Red Roses Just For You 🌹❤️', pos: '35% 30%' },
+        { src: 'pics/Snapchat-2002839702.jpg', caption: 'Sweetest Blush & Pure Happiness 🥹💐', pos: '48% 28%' },
+        { src: 'pics/Snapchat-2039938893.jpg', caption: "Bappa's Blessings & Gajra Grace 🪷🙏", pos: '50% 50%' },
+        { src: 'pics/Snapchat-2097560836.jpg', caption: 'Unmatched Elegance & Charm 🌸🖤', pos: '50% 28%' },
+        { src: 'pics/Snapchat-386501871.jpg', caption: "Ganpati Bappa's Sweet Devotee 🌺✨", pos: '22% 44%' },
+        { src: 'pics/Snapchat-525299783.jpg', caption: 'Traditional Royal Princess 👑🌸', pos: '50% 32%' },
+        { src: 'pics/Snapchat-704675396.jpg', caption: 'Temple Visit & Serene Vibes 🕊️🏛️', pos: '48% 52%' },
+        { src: 'pics/Snapchat-727883275.jpg', caption: 'Together at the Temple 👫❤️', pos: '50% 36%' },
+        { src: 'pics/Snapchat-744632573.jpg', caption: 'Timeless Vintage Poetry 📷🤍', pos: '40% 38%' },
+        { src: 'pics/Snapchat-749600647.jpg', caption: 'Birthday Queen in Purple Bloom 👑💜', pos: '50% 26%' },
+        { src: 'pics/Snapchat-789406451.jpg', caption: 'Under the Birthday Balloons 🎈🎂', pos: '50% 64%' }
+      ];
+
+      const polaroidSlider = document.getElementById('polaroid-vertical-slider');
+      const polaroidActiveNum = document.getElementById('polaroid-active-num');
+      const polaroidPrevBtn = document.getElementById('polaroid-prev-btn');
+      const polaroidNextBtn = document.getElementById('polaroid-next-btn');
+
+      // Lightbox viewer logic
+      const photoLightbox = document.getElementById('photo-lightbox-modal');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+
+      function openLightbox(src, caption) {
+        if (!photoLightbox || !lightboxImg) return;
+        lightboxImg.src = src;
+        if (lightboxCaption) lightboxCaption.textContent = caption;
+        photoLightbox.style.display = 'flex';
+        void photoLightbox.offsetWidth;
+        photoLightbox.style.opacity = '1';
+        playSound('pop');
+      }
+
+      function closeLightbox() {
+        if (!photoLightbox) return;
+        photoLightbox.style.opacity = '0';
+        setTimeout(() => {
+          photoLightbox.style.display = 'none';
+        }, 280);
+      }
+
+      if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeLightbox);
+      if (photoLightbox) {
+        photoLightbox.addEventListener('click', function (e) {
+          if (e.target === photoLightbox) closeLightbox();
+        });
+      }
+
+      const dipaliPhoto1 = document.getElementById('dipali-photo-1');
+      if (dipaliPhoto1 && dipaliPhoto1.parentElement) {
+        dipaliPhoto1.parentElement.addEventListener('click', function () {
+          openLightbox('Snapchat-1893246503.jpg', 'Dipali ✨ My Sweetheart');
+        });
+      }
+
+      function renderPolaroidReel() {
+        if (!polaroidSlider) return;
+        polaroidSlider.innerHTML = '';
+
+        polaroidMemories.forEach((item, idx) => {
+          const num = idx + 1;
+          const tilt = ((idx % 5 - 2) * 0.8).toFixed(1);
+          const slideItem = document.createElement('div');
+          slideItem.className = 'polaroid-slide-item';
+          slideItem.dataset.index = num;
+
+          slideItem.innerHTML = `
+            <div class="polaroid-card" style="transform: rotate(${tilt}deg);">
+              <div class="polaroid-badge-header">
+                <span>🎞️ #${num}</span>
+                <button class="polaroid-like-btn" title="Love this memory">❤️</button>
+              </div>
+              <div class="polaroid-img-box" title="Tap to view full photo">
+                <img 
+                  src="${item.src}" 
+                  alt="Dipali Memory ${num}" 
+                  loading="lazy" 
+                  style="object-fit: cover; object-position: ${item.pos}; width: 100%; height: 100%;"
+                />
+                <div style="position: absolute; bottom: 5px; right: 6px; background: rgba(0,0,0,0.65); color: #fff; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 999px; pointer-events: none; backdrop-filter: blur(4px);">
+                  🔍 Full Photo
+                </div>
+              </div>
+              <div class="polaroid-caption" contenteditable="true" title="Click to edit caption">${item.caption}</div>
+            </div>
+          `;
+
+          const likeBtn = slideItem.querySelector('.polaroid-like-btn');
+          likeBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            this.classList.toggle('liked');
+            playSound('pop');
+          });
+
+          const imgBox = slideItem.querySelector('.polaroid-img-box');
+          imgBox.addEventListener('click', function (e) {
+            e.stopPropagation();
+            openLightbox(item.src, item.caption);
+          });
+
+          slideItem.addEventListener('click', function () {
+            playSound('pop');
+          });
+
+          polaroidSlider.appendChild(slideItem);
+        });
+      }
+
+      renderPolaroidReel();
+
+      // Scroll listener to update active index indicator smoothly
+      if (polaroidSlider) {
+        let scrollTimer;
+        polaroidSlider.addEventListener('scroll', function () {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(() => {
+            const items = polaroidSlider.querySelectorAll('.polaroid-slide-item');
+            const sliderRect = polaroidSlider.getBoundingClientRect();
+            const sliderCenter = sliderRect.top + sliderRect.height / 2;
+            let closestItem = null;
+            let minDiff = Infinity;
+
+            items.forEach(item => {
+              const itemRect = item.getBoundingClientRect();
+              const itemCenter = itemRect.top + itemRect.height / 2;
+              const diff = Math.abs(sliderCenter - itemCenter);
+              if (diff < minDiff) {
+                minDiff = diff;
+                closestItem = item;
+              }
+            });
+
+            if (closestItem && polaroidActiveNum) {
+              polaroidActiveNum.textContent = closestItem.dataset.index;
+            }
+          }, 35);
+        }, { passive: true });
+      }
+
+      // Smooth slide up / down controls
+      if (polaroidPrevBtn && polaroidSlider) {
+        polaroidPrevBtn.addEventListener('click', function () {
+          polaroidSlider.scrollBy({ top: -230, behavior: 'smooth' });
+          playSound('pop');
+        });
+      }
+
+      if (polaroidNextBtn && polaroidSlider) {
+        polaroidNextBtn.addEventListener('click', function () {
+          polaroidSlider.scrollBy({ top: 230, behavior: 'smooth' });
+          playSound('pop');
+        });
+      }
+
+      document.getElementById('to-screen-6-btn').addEventListener('click', function () {
+        goToScreen('screen-6');
+      });
+
+      // ==========================================================================
+      // SCREEN 6: CARTOON CAKE PARTY
+      // ==========================================================================
+      const cakeInteractiveBox = document.getElementById('cake-interactive-box');
+      const cakeCutBanner = document.getElementById('cake-cut-banner');
+      const cakeNextBtnContainer = document.getElementById('cake-next-btn-container');
+      const cakeInstructionHint = document.getElementById('cake-instruction-hint');
+      let cakeCutDone = false;
+
+      function cutBirthdayCake() {
+        if (cakeCutDone) return;
+        cakeCutDone = true;
+
+        cakeInteractiveBox.classList.add('is-cut');
+        cakeInteractiveBox.setAttribute('aria-pressed', 'true');
+
+        playSound('cheer');
+        fireConfettiBurst(260);
+        setTimeout(() => fireConfettiBurst(160), 220);
+
+        cakeCutBanner.style.display = 'block';
+        cakeNextBtnContainer.style.display = 'block';
+        cakeInstructionHint.style.display = 'none';
+      }
+
+      cakeInteractiveBox.addEventListener('click', cutBirthdayCake);
+      cakeInteractiveBox.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          cutBirthdayCake();
+        }
+      });
+
+      document.getElementById('to-dance-screen-btn').addEventListener('click', function () {
+        goToScreen('screen-dance');
+      });
+
+      document.getElementById('dance-to-playlist-btn').addEventListener('click', function () {
+        goToScreen('screen-playlist');
+      });
+
+      document.getElementById('playlist-to-screen-7-btn').addEventListener('click', function () {
+        goToScreen('screen-7');
+      });
+
+      // ==========================================================================
+      // SCREEN 7: SHAYARI & SPECIAL LINES
+      // ==========================================================================
+      document.getElementById('to-screen-8-btn').addEventListener('click', function () {
+        goToScreen('screen-reasons');
+      });
+
+      // ==========================================================================
+      // 10 REASONS: TOUCH-TO-FLIP CARD STACK
+      // ==========================================================================
+      const reasons = [
+        { icon: '🌸', text: 'Aapki masoom muskurahat jo kisi ka bhi din accha bana de. 🌸' },
+        { icon: '🤍', text: 'Aapka caring nature aur sabka bina mange khayal rakhna. 🤍' },
+        { icon: '✨', text: 'Aapki choti-choti baaton mein khush hone ki khoobsurat aadat. ✨' },
+        { icon: '🥹', text: 'Aapki aankhein jo bina bole hi bohot kuch keh jaati hain. 🥹' },
+        { icon: '💎', text: 'Aapka genuine aur real hona—jaise ho bilkul waise dikhna. 💎' },
+        { icon: '🕊️', text: 'Aapki baatein jo hamesha ek positive vibe aur sukoon deti hain. 🕊️' },
+        { icon: '🙈', text: 'Gussa hone par bhi aapka cuteness overload ho jana. 🙈' },
+        { icon: '💖', text: 'Aapki thoughtfulness aur har rishte ko dil se nibhana. 💖' },
+        { icon: '🌟', text: 'Aapka self-respect aur himmat ke sath aage badhna. 🌟' },
+        { icon: '👑', text: 'Kyunki Dipali jaisa pure aur pyaara dil poori duniya mein sirf ek hi hai. 👑' }
+      ];
+      const reasonCard = document.getElementById('reason-card');
+      const reasonCurrent = document.getElementById('reason-current');
+      const reasonIcon = document.getElementById('reason-icon');
+      const reasonNumber = document.getElementById('reason-number');
+      const reasonText = document.getElementById('reason-text');
+      const reasonPrev = document.getElementById('reason-prev');
+      const reasonNext = document.getElementById('reason-next');
+      let currentReason = 0;
+
+      function renderReason() {
+        const reason = reasons[currentReason];
+        reasonCard.classList.remove('flipped');
+        reasonCard.setAttribute('aria-pressed', 'false');
+        reasonCurrent.textContent = String(currentReason + 1);
+        reasonIcon.textContent = reason.icon;
+        reasonNumber.textContent = `Reason #${currentReason + 1}`;
+        reasonText.textContent = reason.text;
+        reasonPrev.disabled = currentReason === 0;
+        reasonNext.disabled = currentReason === reasons.length - 1;
+      }
+
+      function flipReasonCard() {
+        const isFlipped = reasonCard.classList.toggle('flipped');
+        reasonCard.setAttribute('aria-pressed', String(isFlipped));
+      }
+
+      reasonCard.addEventListener('click', flipReasonCard);
+      reasonCard.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          flipReasonCard();
+        }
+      });
+      reasonPrev.addEventListener('click', function () {
+        if (currentReason === 0) return;
+        currentReason -= 1;
+        renderReason();
+      });
+      reasonNext.addEventListener('click', function () {
+        if (currentReason >= reasons.length - 1) return;
+        currentReason += 1;
+        renderReason();
+      });
+      document.getElementById('open-prem-patra-btn').addEventListener('click', function () {
+        goToScreen('screen-8');
+      });
+      renderReason();
+
+      // ==========================================================================
+      // SCREEN 8: THE VINTAGE PREM PATRA
+      // ==========================================================================
+      const vintageEnvelope = document.getElementById('vintage-envelope');
+      const unfoldedLetter = document.getElementById('unfolded-letter');
+      const waxSealBtn = document.getElementById('wax-seal-btn');
+      let letterOpened = false;
+
+      function openLetter() {
+        if (letterOpened) return;
+        letterOpened = true;
+        playSound('unfold');
+        if (vintageEnvelope) vintageEnvelope.style.display = 'none';
+        unfoldedLetter.style.display = 'block';
+        const premSub = document.getElementById('prem-patra-subtext');
+        if (premSub) premSub.innerHTML = '📜 <em>पत्र खुल गया है • नीचे स्क्रॉल करके पूरा पढ़ें</em> 💖';
+      }
+
+      vintageEnvelope.addEventListener('click', openLetter);
+      waxSealBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        openLetter();
+      });
+
+      document.getElementById('to-screen-9-btn').addEventListener('click', function () {
+        goToScreen('screen-9');
+      });
+
+      // ==========================================================================
+      // SCREEN 9: DIPALI'S PRIVATE RETURN NOTE
+      // ==========================================================================
+      const dipaliNoteInput = document.getElementById('dipali-note-input');
+      const saveNoteContinueBtn = document.getElementById('save-note-continue-btn');
+      const noteSavedToast = document.getElementById('note-saved-toast');
+
+      const existingSavedNote = localStorage.getItem('dipali_secret_note');
+      if (existingSavedNote) {
+        try {
+          const parsed = JSON.parse(existingSavedNote);
+          if (parsed && parsed.text) dipaliNoteInput.value = parsed.text;
+        } catch (e) {
+          dipaliNoteInput.value = existingSavedNote;
+        }
+      }
+
+      saveNoteContinueBtn.addEventListener('click', function () {
+        const textVal = dipaliNoteInput.value.trim();
+        const payload = {
+          text: textVal || "(Dipali submitted a heartfelt smile ❤️)",
+          timestamp: new Date().toLocaleString()
+        };
+
+        try {
+          localStorage.setItem('dipali_secret_note', JSON.stringify(payload));
+        } catch (e) {
+          localStorage.setItem('dipali_secret_note', textVal);
+        }
+
+        playSound('cheer');
+        noteSavedToast.style.display = 'block';
+
+        setTimeout(() => {
+          goToScreen('screen-10');
+          fireConfettiBurst(120);
+        }, 700);
+      });
+
+      // ==========================================================================
+      // SCREEN 10: GRAND FINALE
+      // ==========================================================================
+      // ==========================================
+      // SWEET 16 POPUP MODAL (SCREEN 10 ENTRY)
+      // ==========================================
+      const sweet16Overlay = document.getElementById('sweet16-modal-overlay');
+      const sweet16CloseBtn = document.getElementById('sweet16-close-x');
+      const sweet16ClaimBtn = document.getElementById('sweet16-claim-btn');
+
+      function triggerSweet16Popup() {
+        if (!sweet16Overlay) return;
+        sweet16Overlay.style.display = 'flex';
+        void sweet16Overlay.offsetWidth;
+        sweet16Overlay.classList.add('show');
+        playSound('cheer');
+        fireConfettiBurst(150);
+      }
+
+      function closeSweet16Popup() {
+        if (!sweet16Overlay) return;
+        sweet16Overlay.classList.remove('show');
+        setTimeout(() => {
+          sweet16Overlay.style.display = 'none';
+        }, 350);
+        playSound('pop');
+      }
+
+      if (sweet16CloseBtn) sweet16CloseBtn.addEventListener('click', closeSweet16Popup);
+      if (sweet16ClaimBtn) {
+        sweet16ClaimBtn.addEventListener('click', function () {
+          closeSweet16Popup();
+          fireConfettiBurst(120);
+        });
+      }
+      if (sweet16Overlay) {
+        sweet16Overlay.addEventListener('click', function (e) {
+          if (e.target === sweet16Overlay) closeSweet16Popup();
+        });
+      }
+
+      document.getElementById('celebrate-again-btn').addEventListener('click', function () {
+        playSound('cheer');
+        fireConfettiBurst(160);
+      });
+
+      document.getElementById('restart-flow-btn').addEventListener('click', function () {
+        goToScreen('suspense-1');
+      });
+
+      document.getElementById('suspense-reveal-btn').addEventListener('click', function () {
+        goToScreen('suspense-3');
+      });
+
+      document.getElementById('suspense-ready-btn').addEventListener('click', function () {
+        goToScreen('suspense-4');
+      });
+
+      const suspenseFakeButton = document.getElementById('suspense-not-ready-btn');
+      const suspenseToast = document.getElementById('suspense-toast');
+      let suspenseToastTimeout = null;
+
+      suspenseFakeButton.addEventListener('click', function () {
+        suspenseFakeButton.classList.remove('wiggling');
+        void suspenseFakeButton.offsetWidth;
+        suspenseFakeButton.classList.add('wiggling');
+        suspenseToast.textContent = 'Aise kaise nahi! Himmat karo aur button dabao! 😜';
+        suspenseToast.classList.add('show');
+        clearTimeout(suspenseToastTimeout);
+        suspenseToastTimeout = setTimeout(() => suspenseToast.classList.remove('show'), 2600);
+      });
+
+      function resetCelebration() {
+        if (voiceNoteAudio) {
+          voiceNoteAudio.pause();
+          voiceNoteAudio.currentTime = 0;
+        }
+        stopPlaylistAudio();
+        stopSpecialScreenAudio();
+        nameInput.value = '';
+        prankInputView.style.display = 'block';
+        prankRevealView.classList.remove('show');
+
+        // Reset Sweet 16 popup
+        closeSweet16Popup();
+
+        // Reset Ribbon & Calendar
+        ribbonCutDone = false;
+        if (ribbonOverlay) ribbonOverlay.classList.remove('cut');
+        if (calendarNextBtnContainer) calendarNextBtnContainer.style.display = 'none';
+        if (ribbonPromptHint) ribbonPromptHint.innerHTML = 'Cut the ribbon to reveal what makes today so magical! 🎀✂️';
+
+        clearGarden();
+        selectedFlower = '🌹';
+        document.querySelectorAll('.picker-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.flower === selectedFlower);
+        });
+
+        // Reset Cake
+        cakeCutDone = false;
+        cakeInteractiveBox.classList.remove('is-cut');
+        cakeInteractiveBox.setAttribute('aria-pressed', 'false');
+        cakeCutBanner.style.display = 'none';
+        cakeNextBtnContainer.style.display = 'none';
+        cakeInstructionHint.style.display = 'block';
+
+        goToScreen('screen-1');
+      }
+
+      document.getElementById('suspense-reset-btn').addEventListener('click', resetCelebration);
+
+      // ==========================================================================
+      // SECRET ADMIN DASHBOARD (tanmayog)
+      // ==========================================================================
+      const adminNoteContent = document.getElementById('admin-note-content');
+      const adminNoteTimestamp = document.getElementById('admin-note-timestamp');
+      const adminCopyBtn = document.getElementById('admin-copy-btn');
+      const adminTestNoteBtn = document.getElementById('admin-test-note-btn');
+      const adminClearBtn = document.getElementById('admin-clear-btn');
+      const adminBackBtn = document.getElementById('admin-back-btn');
+
+      function loadAdminData() {
+        const raw = localStorage.getItem('dipali_secret_note');
+        if (!raw) {
+          adminNoteContent.innerHTML = '<span style="color:#64748b; font-style:italic;">Abhi tak Dipali ne koi note submit nahi kiya hai.</span>';
+          adminNoteTimestamp.innerHTML = '<span>🕒 Status: Awaiting Dipali\'s reply on Screen 9...</span>';
+          return;
+        }
+
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            adminNoteContent.textContent = parsed.text || '(Empty text)';
+            adminNoteTimestamp.innerHTML = `<span>🕒 Submitted on: <strong>${parsed.timestamp || 'Unknown'}</strong></span>`;
+          } else {
+            adminNoteContent.textContent = raw;
+            adminNoteTimestamp.innerHTML = '<span>🕒 Submitted plain text note</span>';
+          }
+        } catch (e) {
+          adminNoteContent.textContent = raw;
+          adminNoteTimestamp.innerHTML = '<span>🕒 Submitted plain text note</span>';
+        }
+      }
+
+      adminCopyBtn.addEventListener('click', function () {
+        const raw = localStorage.getItem('dipali_secret_note');
+        if (!raw) {
+          alert('No note to copy!');
+          return;
+        }
+        let textToCopy = raw;
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.text) textToCopy = parsed.text;
+        } catch (e) {}
+
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('Note copied to clipboard! 📋');
+          });
+        } else {
+          alert(textToCopy);
+        }
+      });
+
+      adminTestNoteBtn.addEventListener('click', function () {
+        const sample = {
+          text: "Thank you Tanmay! Yeh birthday website sach me sabse pyari aur unexpected surprise hai! Cake party and garden was magical! ❤️🎂✨",
+          timestamp: new Date().toLocaleString()
+        };
+        localStorage.setItem('dipali_secret_note', JSON.stringify(sample));
+        playSound('pop');
+        loadAdminData();
+      });
+
+      adminClearBtn.addEventListener('click', function () {
+        if (confirm('Are you sure you want to delete Dipali\'s saved note?')) {
+          localStorage.removeItem('dipali_secret_note');
+          playSound('pop');
+          loadAdminData();
+        }
+      });
+
+      adminBackBtn.addEventListener('click', function () {
+        goToScreen('screen-1');
+      });
+
+      // Initial progress update
+      updateTopBar('screen-1');
+
+    })();
+  </script>
+</body>
+</html>

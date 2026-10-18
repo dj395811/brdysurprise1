@@ -1,0 +1,6 @@
+{
+  "name": "Dipali's Birthday Celebration",
+  "description": "An interactive, multi-screen birthday website celebration for Dipali with virtual garden, nicknames, polaroids, cake cutting, and secret love note.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
